@@ -6,7 +6,9 @@ import { DocumentaryProvider } from "./documentaries/DocumentaryProvider"
 import { DocumentaryList } from "./documentaries/DocumentaryList"
 import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
-
+import { CategoryProvider } from "./categories/CategoryProvider"
+import { WatchStatusProvider } from "./watchStatuses/WatchStatusProvider"
+import { DocCategoryProvider } from "./docCategories/DocCategoryProvider"
 
 export const Neurofeed = () => (
     <>
@@ -19,9 +21,15 @@ export const Neurofeed = () => (
                     <small>Feed Your Head!</small>
             
                     <h2>Want To Watch</h2>
-                    <DocumentaryProvider>
-                        <DocumentaryList />
-                    </DocumentaryProvider>
+                    <DocCategoryProvider>
+                        <WatchStatusProvider>
+                            <CategoryProvider>
+                                <DocumentaryProvider>
+                                    <DocumentaryList />
+                                </DocumentaryProvider>
+                            </CategoryProvider>
+                        </WatchStatusProvider>
+                    </DocCategoryProvider>
                 </>
                 )
             } else {
