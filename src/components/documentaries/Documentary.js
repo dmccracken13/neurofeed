@@ -11,7 +11,7 @@ export const Documentary = ({ documentary }) => (
         <button>
                 Update
         </button>
-        <div className="documentary__rating"></div>
+        <div className="documentary__rating">Rating{documentary.name}</div>
         <div className="documentary__categories"></div>
         <div className="documentary__review"></div>
     </section>
