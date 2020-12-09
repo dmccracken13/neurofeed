@@ -2,7 +2,7 @@ import React from "react"
 
 // component responsible for rendering a single documentary representation or "card"
 
-export const Documentary = ({ documentary, category, watchStatus }) => (
+export const Documentary = ({ documentary, docCats, watchStatus }) => (
     <section className="documentary">
         <div className="documentary__user">User Name</div>
         <div className="documentary__name">Doc Title{documentary.name}</div>
@@ -12,7 +12,7 @@ export const Documentary = ({ documentary, category, watchStatus }) => (
                 Update
         </button>
         <div className="documentary__rating">Rating: {documentary.rating}</div>
-        <div className="documentary__categories">Categories: {category.name}</div>
+        <div className="documentary__categories">Categories: { docCats.map(dc => dc.category.name) }</div>
         <div className="documentary__review">Review</div>
     </section>
 )
