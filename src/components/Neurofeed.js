@@ -10,6 +10,7 @@ import { CategoryProvider } from "./categories/CategoryProvider"
 import { WatchStatusProvider } from "./watchStatuses/WatchStatusProvider"
 import { DocCategoryProvider } from "./docCategories/DocCategoryProvider"
 import { CategoryList } from "./categories/CategoryList"
+import { DocumentaryForm } from "./documentaries/DocumentaryForm"
 
 export const Neurofeed = () => (
     <>
@@ -27,6 +28,7 @@ export const Neurofeed = () => (
                                 <DocumentaryProvider>
                                     <CategoryList /> 
                                     <DocumentaryList />
+                                    <DocumentaryForm />
                                 </DocumentaryProvider>
                             </CategoryProvider>
                         </WatchStatusProvider>
