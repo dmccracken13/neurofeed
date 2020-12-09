@@ -9,6 +9,7 @@ import { Register } from "./auth/Register"
 import { CategoryProvider } from "./categories/CategoryProvider"
 import { WatchStatusProvider } from "./watchStatuses/WatchStatusProvider"
 import { DocCategoryProvider } from "./docCategories/DocCategoryProvider"
+import { CategoryList } from "./categories/CategoryList"
 
 export const Neurofeed = () => (
     <>
@@ -19,12 +20,12 @@ export const Neurofeed = () => (
                     <>
                     <h2>Neurofeed</h2>
                     <small>Feed Your Head!</small>
-            
-                    <h2>Want To Watch</h2>
+                    
                     <DocCategoryProvider>
                         <WatchStatusProvider>
                             <CategoryProvider>
                                 <DocumentaryProvider>
+                                    <CategoryList /> 
                                     <DocumentaryList />
                                 </DocumentaryProvider>
                             </CategoryProvider>
