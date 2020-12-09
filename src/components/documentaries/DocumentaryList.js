@@ -19,15 +19,15 @@ export const DocumentaryList = ({ props }) => {
 
     }, [])
 
-    console.log(docCategories)
+    // console.log(docCategories)
     return (
         <>
-            <h1>Watched</h1>
+            <h1>Watch Lists</h1>
 
             <div className="documentaries">
                 {documentaries.map(documentary => {
                     const filteredDocCats = docCategories.filter(dc => dc.documentaryId === documentary.id)
-                    console.log(filteredDocCats)
+                    // console.log(filteredDocCats)
                     const watchStat = watchStatuses.find(w => w.id === documentary.watchStatusId)
 
                         return <Documentary key={documentary.id} 
