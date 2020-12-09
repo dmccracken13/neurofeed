@@ -13,7 +13,7 @@ export const DocCategoryProvider = (props) => {
     const [docCategories, setDocCategories] = useState([])
 
     const getDocCategories = () => {
-        return fetch("http://localhost:8088/docCategories")
+        return fetch("http://localhost:8088/docCategories?_expand=category")
             .then(res => res.json())
             .then(setDocCategories)
     }
