@@ -10,13 +10,18 @@ export const DocumentaryForm = () => {
 
     const { categories, getCategories } = useContext(CategoryContext)
     const { watchStatuses, getWatchStatuses } = useContext(WatchStatusContext)
-    const { documentaries, searchTerms, searchDocumentary } = useContext(DocumentaryContext)
+    const { filteredDocs, setFilteredDocs} = useContext(DocumentaryContext)
 
+// declare a variable to hold the search results of the documentaries from the external API, 
+// and will be mapped through to populate the dropdown
+
+
+// react hook responsible for envoking provider functions to get data to be used on the form
     useEffect(()=>{
         getWatchStatuses()
         .then(getCategories)
-        .then(searchDocumentary)
     }, [])
+    console.log(filteredDocs)
 
     return (
         <>
@@ -25,7 +30,7 @@ export const DocumentaryForm = () => {
                 <label>Select a documentary</label>
                 <select name="docForm_results" ref={register({ required: true })}>
                     <option value="0">Select...</option>
-                    {searchTerms.map(st => (
+                    {filteredDocs.map(st => (
                             <option key={st.id} value={st.id}>
                                 {st.original_title}
                             </option>
