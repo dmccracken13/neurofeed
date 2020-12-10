@@ -16,7 +16,6 @@ export const DocumentaryList = ({ props }) => {
         .then(getCategories)
         .then(getDocCategories)
         .then(getDocumentaries)
-
     }, [])
 
     // console.log(docCategories)
