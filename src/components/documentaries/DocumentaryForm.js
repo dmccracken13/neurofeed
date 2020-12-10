@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { CategoryContext } from "../categories/CategoryProvider"
 import { WatchStatusContext } from "../watchStatuses/WatchStatusProvider"
+import { DocumentaryContext } from "./DocumentaryProvider"
 
 export const DocumentaryForm = () => {
     const { register, handleSubmit, watch, errors } = useForm();
@@ -9,24 +10,26 @@ export const DocumentaryForm = () => {
 
     const { categories, getCategories } = useContext(CategoryContext)
     const { watchStatuses, getWatchStatuses } = useContext(WatchStatusContext)
-  
+    const { documentaries, searchTerms, searchDocumentary } = useContext(DocumentaryContext)
+
     useEffect(()=>{
         getWatchStatuses()
         .then(getCategories)
+        .then(searchDocumentary)
     }, [])
-  
+
     return (
         <>
-            {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
             <form className="documentary_form" onSubmit={handleSubmit(onSubmit)}>
             {/* register your input into the hook by invoking the "register" function */}
-                <label>Search for a documentary</label>
-                <input name="docForm_search" defaultValue="" ref={register} />
-                {/* include validation with required or other standard HTML validation rules */}
-                <label>Select from results</label>
+                <label>Select a documentary</label>
                 <select name="docForm_results" ref={register({ required: true })}>
-                    <option value="">Select...</option>
-                    <option value="test">Test</option>
+                    <option value="0">Select...</option>
+                    {searchTerms.map(st => (
+                            <option key={st.id} value={st.id}>
+                                {st.original_title}
+                            </option>
+                        ))}
                 </select>
                 
                 <label>Choose a watch list</label>
