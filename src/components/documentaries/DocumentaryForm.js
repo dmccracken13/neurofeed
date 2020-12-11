@@ -10,11 +10,9 @@ export const DocumentaryForm = () => {
 
     const { categories, getCategories } = useContext(CategoryContext)
     const { watchStatuses, getWatchStatuses } = useContext(WatchStatusContext)
-    const { filteredDocs, setFilteredDocs} = useContext(DocumentaryContext)
+    const { filteredDocs} = useContext(DocumentaryContext)
 
-// declare a variable to hold the search results of the documentaries from the external API, 
-// and will be mapped through to populate the dropdown
-
+    const ratingsArray = ["1 Star", "2 Stars", "3 Stars", "3 Stars", "4 Stars", "5 Stars"]
 
 // react hook responsible for envoking provider functions to get data to be used on the form
     useEffect(()=>{
@@ -38,7 +36,7 @@ export const DocumentaryForm = () => {
                 </select>
                 
                 <label>Choose a watch list</label>
-                <select name="docForm_list" ref={register({ required: true })}>
+                <select name="watchStatusId" ref={register({ required: true })}>
                     <option value="0">Select...</option>
                     {watchStatuses.map(ws => (
                             <option key={ws.id} value={ws.id}>
@@ -48,13 +46,18 @@ export const DocumentaryForm = () => {
                 </select>
 
                 <label>Choose your rating</label>
-                <select name="docForm_list" ref={register({ required: true })}>
-                    <option value="">Select...</option>
-                    <option value="oneStar">1 Star</option>
+                <select name="rating" ref={register({ required: true })}>
+                        <option value="">Select...</option>
+                        {ratingsArray.map((rating, i) => (
+                            <option key={i} value={i}>
+                                {rating}
+                            </option>
+                        ))}
+                    {/* <option value="oneStar">1 Star</option>
                     <option value="twoStars">2 Stars</option>
                     <option value="threeStars">3 Stars</option>
                     <option value="threeStars">4 Stars</option>
-                    <option value="threeStars">5 Stars</option>
+                    <option value="threeStars">5 Stars</option> */}
                 </select>
 
                 
