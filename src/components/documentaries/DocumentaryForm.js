@@ -96,8 +96,7 @@ export const DocumentaryForm = () => {
 
                 
                 <label>Write a review</label>
-                <input name="review" defaultValue="" ref={register} />
-                <input type="submit" />
+                <input name="review" type="text" defaultValue="" ref={register} />
 
                 <label>Choose your categories</label>
                 <select name="categoryId" ref={register({ required: true })}>
@@ -109,7 +108,7 @@ export const DocumentaryForm = () => {
                         ))}
                 </select>
 
-                
+                <button type="submit">Submit</button>
 
             </form>
         </>

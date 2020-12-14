@@ -12,7 +12,7 @@ export const Documentary = ({ documentary, docCats, watchStatus }) => (
                 Update
         </button>
         <div className="documentary__synapsis">Synapsis: {documentary.synapsis}</div>
-        <div className="documentary__rating">Rating: {documentary.rating}</div>
+        <div className="documentary__rating">Rating: {documentary.rating} stars</div>
         <div className="documentary__categories">Categories: { docCats.map(dc => dc.category.name) }</div>
         <div className="documentary__review">Review: {documentary.review}</div>
     </section>
