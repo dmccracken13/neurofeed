@@ -6,7 +6,26 @@ import { DocumentaryContext } from "./DocumentaryProvider"
 
 export const DocumentaryForm = () => {
     const { register, handleSubmit, watch, errors } = useForm();
-    const onSubmit = data => addDocumentary(data);
+
+    // include functionality to post other data points that arent in register 
+// need to add synapsis and poster, asthey are not include in form 
+    
+
+        const onSubmit = (data) => {
+        // create a new documentary object and a docCat object using data
+    
+        const foundDoc = filteredDocs.find(doc => doc.title === data.title)
+        data.poster = `https://image.tmdb.org/t/p/w500${foundDoc.poster_path}`
+        data.synapsis = foundDoc.overview
+        data.watchStatusId = parseInt(data.watchStatusId)
+        const newDataObj = data 
+
+
+        addDocumentary(newDataObj)
+        
+        // then I need to post the selected category to the local api at the join table of docCats
+
+    }
 
     const { categories, getCategories } = useContext(CategoryContext)
     const { watchStatuses, getWatchStatuses } = useContext(WatchStatusContext)
@@ -72,6 +91,7 @@ export const DocumentaryForm = () => {
                         ))}
                 </select>
 
+                
 
             </form>
         </>
