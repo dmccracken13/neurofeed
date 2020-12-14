@@ -1,49 +1,67 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { CategoryContext } from "../categories/CategoryProvider"
 import { WatchStatusContext } from "../watchStatuses/WatchStatusProvider"
 import { DocumentaryContext } from "./DocumentaryProvider"
+import { DocCategoryContext } from "../docCategories/DocCategoryProvider"
 
 export const DocumentaryForm = () => {
-    const { register, handleSubmit, watch, errors } = useForm();
+    const { register, handleSubmit } = useForm();
 
-    // include functionality to post other data points that arent in register 
-// need to add synapsis and poster, asthey are not include in form 
-    
-
-        const onSubmit = (data) => {
-        // create a new documentary object and a docCat object using data
-    
-        const foundDoc = filteredDocs.find(doc => doc.title === data.title)
-        data.poster = `https://image.tmdb.org/t/p/w500${foundDoc.poster_path}`
-        data.synapsis = foundDoc.overview
-        data.watchStatusId = parseInt(data.watchStatusId)
-        const newDataObj = data 
-
-
-        addDocumentary(newDataObj)
-        
-        // then I need to post the selected category to the local api at the join table of docCats
-
-    }
+    // all the arrays and functions that get, set, and add them are declared for the contexts they will be used in
+    // after their context providers are imported
 
     const { categories, getCategories } = useContext(CategoryContext)
     const { watchStatuses, getWatchStatuses } = useContext(WatchStatusContext)
-    const { addDocumentary, filteredDocs} = useContext(DocumentaryContext)
+    const { addDocumentary, filteredDocs } = useContext(DocumentaryContext)
+    const { addDocCategory } = useContext(DocCategoryContext)
+
+    // array which will be used to populate the ratings options for the ratings drop down in the form
 
     const ratingsArray = ["1 Star", "2 Stars", "3 Stars", "3 Stars", "4 Stars", "5 Stars"]
 
-// react hook responsible for envoking provider functions to get data to be used on the form
-    useEffect(()=>{
-        getWatchStatuses()
-        .then(getCategories)
-    }, [])
-    // console.log(filteredDocs)
+// The on submit function takes in data from the form input field refs and invokes the 
+// functions that will post the data to the local API
+        const onSubmit = (data) => {
+        // find a doc from the filtered array who's title matches the input field title
+        const foundDoc = filteredDocs.find(doc => doc.title === data.title)
+         // create a new documentary object to get passed through addDocumentary to be posted to the api
+        const newDocObj = {
+            userId: parseInt(localStorage.getItem("app_user_id")),
+            title: foundDoc.title, 
+            watchStatusId: parseInt(data.watchStatusId),
+            poster: `https://image.tmdb.org/t/p/w500${foundDoc.poster_path}`,
+            synapsis: foundDoc.overview,
+            rating: data.rating,
+            review: data.review 
+        } 
+        // addDocumentary is invoked with newDocObj being passed as the argument 
+        addDocumentary(newDocObj)
+        // Then, addDocumentary returns a newly created docObj, the reponses is parsed, and passed through 
+        // addDocCategory so that the recently added documentary's id can be accessed and added to the new 
+        // docCatObj before it is posted to the API
+        .then(newlyCreatedDoc => {
+            addDocCategory({
+                documentaryId: newlyCreatedDoc.id,
+                categoryId: parseInt(data.categoryId)
+            })
+        })
+    }
+
+        // react hook responsible for envoking provider functions to get data to be used on the form
+        useEffect(()=>{
+            getWatchStatuses()
+            .then(getCategories)
+        },  [])
+
+        // Then DocumentaryForm returns the jsx representation for the form 
 
     return (
         <>
             <form className="documentary_form" onSubmit={handleSubmit(onSubmit)}>
-            {/* register your input into the hook by invoking the "register" function */}
+            {/* Drop down for selecting a documentary, which has it's options populated 
+            by mapping through the array containing the resulte from what is typed into the 
+            DocumentarySearch component  */}
                 <label>Select a documentary</label>
                 <select name="title" ref={register({ required: true })}>
                     <option value="0">Select...</option>
@@ -54,8 +72,8 @@ export const DocumentaryForm = () => {
                         ))}
                 </select>
 
-                {/* <input type="text" name="synapsis"  value={st.overview} /> */}
-                
+                {/* Dropdown for selecting a watch list, which has it's options populated by envoking the 
+                getWatchStatuses function, and mapping through the watchStatuses array that it sets       */}
                 <label>Choose a watch list</label>
                 <select name="watchStatusId" ref={register({ required: true })}>
                     <option value="0">Select...</option>
@@ -82,7 +100,7 @@ export const DocumentaryForm = () => {
                 <input type="submit" />
 
                 <label>Choose your categories</label>
-                <select name="docForm_categories" ref={register({ required: true })}>
+                <select name="categoryId" ref={register({ required: true })}>
                     <option value="0">Select...</option>
                     {categories.map(c => (
                             <option key={c.id} value={c.id}>
