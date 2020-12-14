@@ -13,9 +13,8 @@ export const DocumentaryProvider = (props) => {
 // useState will return the value of the state and a function that updates it
     
     const [documentaries, setDocumentaries] = useState([])
-
-// function to search the tmdb API for a specific documentary, then store within the provider what the user 
-// types into the search field 
+    const [filteredDocs, setFilteredDocs] = useState([])
+    // const [docsById, setDocsById] = useState([])
 
     const [ searchTerms, setTerms ] = useState("")
 
@@ -42,17 +41,23 @@ export const DocumentaryProvider = (props) => {
             .then(getDocumentaries)
     }
 
+// function to search the tmdb API for a specific documentary, then store within the provider what the user 
+// types into the search field 
+
     const searchDocumentary = (searchDoc) => { 
         return fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiObject.tmdbKey}&language=en-US&query=${searchDoc}`)
             .then(response => response.json())
-            .then(setTerms)
+            .then((parsedResponse) => {
+            setFilteredDocs(parsedResponse.results )
+        })
     }
 
 // Return the context for usage, defining what this component will expose to other components 
 
     return (
         <DocumentaryContext.Provider value={{
-            documentaries, addDocumentary, getDocumentaries, searchDocumentary, searchTerms, setTerms
+            documentaries, addDocumentary, getDocumentaries, searchDocumentary, 
+            searchTerms, setTerms, filteredDocs, setFilteredDocs
         }}>
             {props.children}
         </DocumentaryContext.Provider>

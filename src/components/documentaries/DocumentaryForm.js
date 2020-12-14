@@ -1,148 +1,79 @@
-// import React, { useContext, useRef, useEffect, useState } from "react"
-// import { DocumentaryContext } from "./DocumentaryProvider"
+import React, { useState, useContext, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { CategoryContext } from "../categories/CategoryProvider"
+import { WatchStatusContext } from "../watchStatuses/WatchStatusProvider"
+import { DocumentaryContext } from "./DocumentaryProvider"
 
-// export const DocumentaryForm = (props) => {
-//     const { documentaries, getDocumentaries } = useContext(DocumentaryContext)
-//     // const { animals, addAnimal, getAnimals, updateAnimal } = useContext(AnimalContext)
+export const DocumentaryForm = () => {
+    const { register, handleSubmit, watch, errors } = useForm();
+    const onSubmit = data => addDocumentary(data);
 
-//     const [animal, setAnimal] = useState({})
+    const { categories, getCategories } = useContext(CategoryContext)
+    const { watchStatuses, getWatchStatuses } = useContext(WatchStatusContext)
+    const { addDocumentary, filteredDocs} = useContext(DocumentaryContext)
 
-//     // Is there a a URL parameter??
-//     const editMode = props.match.params.hasOwnProperty("animalId")
+    const ratingsArray = ["1 Star", "2 Stars", "3 Stars", "3 Stars", "4 Stars", "5 Stars"]
 
-//     const handleControlledInputChange = (event) => {
-//         /*
-//             When changing a state object or array, always create a new one
-//             and change state instead of modifying current one
-//         */
-//         const newAnimal = Object.assign({}, animal)
-//         newAnimal[event.target.name] = event.target.value
-//         setAnimal(newAnimal)
-//     }
-    
-//     /*
-//         If there is a URL parameter, then the user has chosen to
-//         edit an animal.
-//             1. Get the value of the URL parameter.
-//             2. Use that `id` to find the animal.
-//             3. Update component state variable.
-//     */
+// react hook responsible for envoking provider functions to get data to be used on the form
+    useEffect(()=>{
+        getWatchStatuses()
+        .then(getCategories)
+    }, [])
+    // console.log(filteredDocs)
+
+    return (
+        <>
+            <form className="documentary_form" onSubmit={handleSubmit(onSubmit)}>
+            {/* register your input into the hook by invoking the "register" function */}
+                <label>Select a documentary</label>
+                <select name="title" ref={register({ required: true })}>
+                    <option value="0">Select...</option>
+                    {filteredDocs.map(st => (
+                            <option key={st.id} value={st.title}>
+                                {st.title}
+                            </option>
+                        ))}
+                </select>
+
+                {/* <input type="text" name="synapsis"  value={st.overview} /> */}
+                
+                <label>Choose a watch list</label>
+                <select name="watchStatusId" ref={register({ required: true })}>
+                    <option value="0">Select...</option>
+                    {watchStatuses.map(ws => (
+                            <option key={ws.id} value={ws.id}>
+                                {ws.name}
+                            </option>
+                        ))}
+                </select>
+
+                <label>Choose your rating</label>
+                <select name="rating" ref={register({ required: true })}>
+                        <option value="">Select...</option>
+                        {ratingsArray.map((rating, i) => (
+                            <option key={i} value={i}>
+                                {rating}
+                            </option>
+                        ))}
+                </select>
+
+                
+                <label>Write a review</label>
+                <input name="review" defaultValue="" ref={register} />
+                <input type="submit" />
+
+                <label>Choose your categories</label>
+                <select name="docForm_categories" ref={register({ required: true })}>
+                    <option value="0">Select...</option>
+                    {categories.map(c => (
+                            <option key={c.id} value={c.id}>
+                                {c.name}
+                            </option>
+                        ))}
+                </select>
 
 
-//     const getAnimalInEditMode = () => {
-//         if (editMode) {
-//             const animalId = parseInt(props.match.params.animalId)
-//             const selectedAnimal = animals.find(a => a.id === animalId) || {}
-//             setAnimal(selectedAnimal)
-//         }
-//     }
-    
-//     useEffect(() => {
-//         getAnimals()
-//         getLocations()
-//     }, [])
-
-//      // Once provider state is updated, determine the animal (if edit)
-//     useEffect(() => {
-//         getAnimalInEditMode()
-//     }, [animals])
-
-
-//     const constructNewAnimal = () => {
-//         /*
-//             The `location` and `animal` variables below are
-//             the references attached to the input fields. You
-//             can't just ask for the `.value` property directly,
-//             but rather `.current.value` now in React.
-//         */
-//         const locationId = parseInt(animal.locationId)
-
-//         if (locationId === 0) {
-//             window.alert("Please select a location")
-//         } else {
-//             if (editMode) {
-//                 updateAnimal({
-//                     id: animal.id,
-//                     name: animal.name,
-//                     breed: animal.breed,
-//                     locationId: locationId,
-//                     treatment: animal.treatment,
-//                     customerId: parseInt(localStorage.getItem("kennel_customer"))
-//                 })
-//                     .then(() => props.history.push("/animals"))
-//             } else {
-//                 addAnimal({
-//                     name: animal.name,
-//                     breed: animal.breed,
-//                     locationId: locationId,
-//                     treatment: animal.treatment,
-//                     customerId: parseInt(localStorage.getItem("kennel_customer"))
-//                 })
-//                     .then(() => props.history.push("/animals"))
-//             }
-//         }
-//     }
-
-//     return (
-//         <form className="animalForm">
-//             <h2 className="animalForm__title">{editMode ? "Update Animal" : "Admit Animal"}</h2>
-//             <fieldset>
-//                 <div className="form-group">
-//                     <label htmlFor="name">Animal name: </label>
-//                     <input type="text" name="name" required autoFocus className="form-control"
-//                         proptype="varchar"
-//                         placeholder="Animal name"
-//                         value={animal.name}
-//                         onChange={handleControlledInputChange}
-//                     />
-//                 </div>
-//             </fieldset>
-//             <fieldset>
-//                 <div className="form-group">
-//                     <label htmlFor="breed">Animal breed: </label>
-//                     <input type="text" name="breed" required className="form-control"
-//                         proptype="varchar"
-//                         placeholder="Animal breed"
-//                         value={animal.breed}
-//                         onChange={handleControlledInputChange}
-//                     />
-//                 </div>
-//             </fieldset>
-//             <fieldset>
-//                 <div className="form-group">
-//                     <label htmlFor="locationId">Location: </label>
-//                     <select name="locationId" className="form-control"
-//                         proptype="int"
-//                         value={animal.locationId}
-//                         onChange={handleControlledInputChange}>
-
-//                         <option value="0">Select a location</option>
-//                         {locations.map(e => (
-//                             <option key={e.id} value={e.id}>
-//                                 {e.name}
-//                             </option>
-//                         ))}
-//                     </select>
-//                 </div>
-//             </fieldset>
-//             <fieldset>
-//                 <div className="form-group">
-//                     <label htmlFor="treatment">Treatments: </label>
-//                     <textarea type="text" name="treatment" className="form-control"
-//                         proptype="varchar"
-//                         value={animal.treatment}
-//                         onChange={handleControlledInputChange}>
-//                     </textarea>
-//                 </div>
-//             </fieldset>
-//             <button type="submit"
-//                 onClick={evt => {
-//                     evt.preventDefault() // Prevent browser from submitting the form
-//                     constructNewAnimal()
-//                 }}
-//                 className="btn btn-primary">
-//                 {editMode ? "Save Updates" : "Make Reservation"}
-//             </button>
-//         </form>
-//     )
-// }
+            </form>
+        </>
+    );
+}
