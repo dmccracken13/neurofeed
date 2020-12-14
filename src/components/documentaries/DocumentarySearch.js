@@ -16,9 +16,3 @@ export const DocumentarySearch = (props) => {
         </>
     )
 }
-
-// const searchDocumentary = (searchDoc) => { 
-//     return fetch(`https://api.themoviedb.org/3/search/movie?api_key=${apiObject.tmdbKey}&language=en-US&query=${searchDoc}`)
-//         .then(response => response.json())
-//         .then(setTerms)
-// }

@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react"
 import { DocumentaryContext } from "./DocumentaryProvider"
 import { Documentary } from "./Documentary"
-import { CategoryContext } from "../categories/CategoryProvider"
 import { WatchStatusContext } from "../watchStatuses/WatchStatusProvider"
 import { DocCategoryContext } from "../docCategories/DocCategoryProvider"
 
@@ -11,12 +10,10 @@ export const DocumentaryList = ({ props }) => {
 // declaration of variables that will be used, the coresponding functions that set them, and the contexts that
 // they were assigned to in their providers
 
-    const { documentaries, filteredDocs, getDocumentaries, docsById, getDocById} = useContext(DocumentaryContext)
+    const { documentaries, getDocumentaries } = useContext(DocumentaryContext)
 
     const { watchStatuses, getWatchStatuses } = useContext(WatchStatusContext)
     const { docCategories, getDocCategories } = useContext(DocCategoryContext)
-
-    const [ wantToWatch, setWantToWatch] = useState([])
 
 // React hook used to invoke functions to get the data that will be used 
 
@@ -26,12 +23,12 @@ export const DocumentaryList = ({ props }) => {
         .then(getDocumentaries)
     }, [])
 
-    useEffect( ()=>{ const wannaArray = []
-    const wanna = documentaries.filter(d => d.watchStatusId === 1) 
-        .map(documentary => getDocById(documentary)
-        .then((doc) => wannaArray.push(doc)))
-        setWantToWatch(wanna)
-    }, [documentaries])
+    // useEffect( ()=>{ const wannaArray = []
+    // const wanna = documentaries.filter(d => d.watchStatusId === 1) 
+    //     .map(documentary => getDocById(documentary)
+    //     .then((doc) => wannaArray.push(doc)))
+    //     setWantToWatch(wanna)
+    // }, [documentaries])
 
     // useEffect(()=>{
     //    documentaries       // array of documentaries set by the getDocumentaries function 
@@ -51,24 +48,19 @@ export const DocumentaryList = ({ props }) => {
             <div className="documentaries">
                 <h2>Want To Watch</h2>
                 <div className="documentaries_wantToWatch">
-                    {/* {documentaries       // array of documentaries set by the getDocumentaries function 
+                    {documentaries       // array of documentaries set by the getDocumentaries function 
                     .filter(d => d.watchStatusId === 1)     // here we are filtering the documentary array by the watch status id of 1
                     .map(documentary => {
                         const filteredDocCats = docCategories.filter(dc => dc.documentaryId === documentary.id)
                         const watchStat = watchStatuses.find(w => w.id === documentary.watchStatusId)
-                        console.log(documentary)
-                        const apiDoc = getDocById(documentary)
-                            .then(() => { 
-                                (console.log(apiDoc)) }) */}
-{/* 
+
                             return <Documentary key={documentary.id} 
                             documentary={documentary} 
                             docCats={filteredDocCats}
                             watchStatus={watchStat}
-                            // filteredDoc={apiDoc}
                             />
-                    }) */}
-                    {/* } */}
+                    }) 
+                }
                 </div>
                 <h2>Watched</h2>
                 <div className="documentaries_watched">

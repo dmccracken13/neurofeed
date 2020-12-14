@@ -14,8 +14,8 @@ export const DocumentaryProvider = (props) => {
     
     const [documentaries, setDocumentaries] = useState([])
     const [filteredDocs, setFilteredDocs] = useState([])
-    const [docsById, setDocsById] = useState([])
- 
+    // const [docsById, setDocsById] = useState([])
+
     const [ searchTerms, setTerms ] = useState("")
 
 // function responsible for getting documentaries from the local API, then updates the value 
@@ -52,18 +52,12 @@ export const DocumentaryProvider = (props) => {
         })
     }
 
-    const getDocById = (documentary) => { 
-        return fetch(`https://api.themoviedb.org/3/movie/${parseInt(documentary.apiId)}?api_key=${apiObject.tmdbKey}&language=en-US`)
-            .then(response => response.json())
-            // .then(setDocsById)
-    }
-
 // Return the context for usage, defining what this component will expose to other components 
 
     return (
         <DocumentaryContext.Provider value={{
             documentaries, addDocumentary, getDocumentaries, searchDocumentary, 
-            searchTerms, setTerms, filteredDocs, setFilteredDocs, docsById, setDocsById, getDocById
+            searchTerms, setTerms, filteredDocs, setFilteredDocs
         }}>
             {props.children}
         </DocumentaryContext.Provider>

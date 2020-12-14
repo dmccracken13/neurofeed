@@ -6,11 +6,11 @@ import { DocumentaryContext } from "./DocumentaryProvider"
 
 export const DocumentaryForm = () => {
     const { register, handleSubmit, watch, errors } = useForm();
-    const onSubmit = data => console.log(data);
+    const onSubmit = data => addDocumentary(data);
 
     const { categories, getCategories } = useContext(CategoryContext)
     const { watchStatuses, getWatchStatuses } = useContext(WatchStatusContext)
-    const { filteredDocs} = useContext(DocumentaryContext)
+    const { addDocumentary, filteredDocs} = useContext(DocumentaryContext)
 
     const ratingsArray = ["1 Star", "2 Stars", "3 Stars", "3 Stars", "4 Stars", "5 Stars"]
 
@@ -19,21 +19,23 @@ export const DocumentaryForm = () => {
         getWatchStatuses()
         .then(getCategories)
     }, [])
-    console.log(filteredDocs)
+    // console.log(filteredDocs)
 
     return (
         <>
             <form className="documentary_form" onSubmit={handleSubmit(onSubmit)}>
             {/* register your input into the hook by invoking the "register" function */}
                 <label>Select a documentary</label>
-                <select name="docForm_results" ref={register({ required: true })}>
+                <select name="title" ref={register({ required: true })}>
                     <option value="0">Select...</option>
                     {filteredDocs.map(st => (
-                            <option key={st.id} value={st.id}>
-                                {st.original_title}
+                            <option key={st.id} value={st.title}>
+                                {st.title}
                             </option>
                         ))}
                 </select>
+
+                {/* <input type="text" name="synapsis"  value={st.overview} /> */}
                 
                 <label>Choose a watch list</label>
                 <select name="watchStatusId" ref={register({ required: true })}>
@@ -53,16 +55,11 @@ export const DocumentaryForm = () => {
                                 {rating}
                             </option>
                         ))}
-                    {/* <option value="oneStar">1 Star</option>
-                    <option value="twoStars">2 Stars</option>
-                    <option value="threeStars">3 Stars</option>
-                    <option value="threeStars">4 Stars</option>
-                    <option value="threeStars">5 Stars</option> */}
                 </select>
 
                 
                 <label>Write a review</label>
-                <input name="docForm_review" defaultValue="" ref={register} />
+                <input name="review" defaultValue="" ref={register} />
                 <input type="submit" />
 
                 <label>Choose your categories</label>
