@@ -38,7 +38,11 @@ export const DocumentaryProvider = (props) => {
             },
             body: JSON.stringify(documentary)
         })
-            .then(getDocumentaries)
+            .then(response => response.json())
+            .then((newDocObj) => {
+                getDocumentaries()
+                return newDocObj
+            })
     }
 
 // function to search the tmdb API for a specific documentary, then store within the provider what the user 
