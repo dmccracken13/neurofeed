@@ -5,7 +5,7 @@ import { Category } from "./Category"
 export const CategoryList = ({  }) => {
     const { categories, getCategories } = useContext(CategoryContext)
     const userId =  parseInt(localStorage.getItem("app_user_id"))
-    console.log(userId)
+    // console.log(userId)
     useEffect(()=>{
         getCategories()
     }, [])

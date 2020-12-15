@@ -56,12 +56,24 @@ export const DocumentaryProvider = (props) => {
         })
     }
 
+    const getDocById = (id) => {
+        return fetch(`http://localhost:8088/documentaries/${ id }`)
+            .then(res => res.json())
+    }
+
+    const removeDocumentary = documentaryId => {
+        return fetch(`http://localhost:8088/documentaries/${documentaryId}`, {
+            method: "DELETE"
+        })
+            .then(getDocumentaries)
+    }
+
 // Return the context for usage, defining what this component will expose to other components 
 
     return (
         <DocumentaryContext.Provider value={{
             documentaries, addDocumentary, getDocumentaries, searchDocumentary, 
-            searchTerms, setTerms, filteredDocs, setFilteredDocs
+            searchTerms, setTerms, filteredDocs, setFilteredDocs, removeDocumentary, getDocById
         }}>
             {props.children}
         </DocumentaryContext.Provider>

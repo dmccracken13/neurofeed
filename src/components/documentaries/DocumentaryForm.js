@@ -5,7 +5,7 @@ import { WatchStatusContext } from "../watchStatuses/WatchStatusProvider"
 import { DocumentaryContext } from "./DocumentaryProvider"
 import { DocCategoryContext } from "../docCategories/DocCategoryProvider"
 
-export const DocumentaryForm = () => {
+export const DocumentaryForm = (props) => {
     const { register, handleSubmit } = useForm();
 
     // all the arrays and functions that get, set, and add them are declared for the contexts they will be used in
@@ -108,7 +108,9 @@ export const DocumentaryForm = () => {
                         ))}
                 </select>
 
-                <button type="submit">Submit</button>
+                <button type="submit" onClick={() => {
+                props.history.push(`/`)
+                }}>Submit</button>
 
             </form>
         </>
