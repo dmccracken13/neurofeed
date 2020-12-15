@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react"
+import React, { useContext, useEffect } from "react"
 import { DocumentaryContext } from "./DocumentaryProvider"
 import { Documentary } from "./Documentary"
 import { WatchStatusContext } from "../watchStatuses/WatchStatusProvider"
