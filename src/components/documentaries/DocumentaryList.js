@@ -1,4 +1,5 @@
-import React, { useState, useContext, useEffect } from "react"
+import React, { useContext, useEffect } from "react"
+import { Link } from "react-router-dom"
 import { DocumentaryContext } from "./DocumentaryProvider"
 import { Documentary } from "./Documentary"
 import { WatchStatusContext } from "../watchStatuses/WatchStatusProvider"
@@ -26,6 +27,7 @@ export const DocumentaryList = ( props ) => {
         <>
             <h1>Watch Lists</h1>
             <div className="documentaries">
+                <Link to={`/form`}>Add Documentary</Link>
                 <h2>Want To Watch</h2>
                 <div className="documentaries_wantToWatch">
                     {documentaries       // array of documentaries set by the getDocumentaries function 
