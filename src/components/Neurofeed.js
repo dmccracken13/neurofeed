@@ -1,8 +1,6 @@
 import React from "react"
 import { Route, Redirect } from "react-router-dom"
-import { Link } from "react-router-dom"
-// import { ApplicationViews } from "./ApplicationViews"
-// import { NavBar } from "./nav/NavBar"
+// import { Link } from "react-router-dom"
 import { DocumentaryProvider } from "./documentaries/DocumentaryProvider"
 import { DocumentaryList } from "./documentaries/DocumentaryList"
 import { Login } from "./auth/Login"
@@ -31,7 +29,6 @@ export const Neurofeed = (props) => (
                                     <Route exact path="/" render={
                                         props => 
                                             <>
-                                                <Link to={`/form`}>Add Documentary</Link>
                                                 <CategoryList />
                                                 <DocumentaryList {...props} />
                                             </>
@@ -40,20 +37,6 @@ export const Neurofeed = (props) => (
                                 </CategoryProvider>
                             </WatchStatusProvider>
                         </DocCategoryProvider>
-
-                        {/* <Route exact path="/">
-                            <DocCategoryProvider>
-                                <WatchStatusProvider>
-                                    <CategoryProvider>
-                                        <DocumentaryProvider>
-                                            <Link to={`/form`}>Add Documentary</Link>
-                                            <CategoryList /> 
-                                            <DocumentaryList />
-                                        </DocumentaryProvider>
-                                    </CategoryProvider>
-                                </WatchStatusProvider>
-                            </DocCategoryProvider>
-                        </Route> */}
 
                         <DocCategoryProvider>
                             <WatchStatusProvider>
