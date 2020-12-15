@@ -1,18 +1,22 @@
 import React, { useContext } from "react"
 import { DocumentaryContext } from "./DocumentaryProvider"
 
-export const DocumentarySearch = (props) => {
+export const DocumentarySearch = () => {
     const { searchDocumentary } = useContext(DocumentaryContext)
 
-    return (
-        <>
-            Search for a documentary:
-            <input type="text"
-                className="input--wide"
-                onKeyUp={
-                    (keyEvent) => searchDocumentary(keyEvent.target.value)
-                }
-                placeholder="Search for a documentary... " />
-        </>
-    )
+return (
+    <>
+        Search for a documentary:
+        <input type="text"
+            className="input--wide"
+            onKeyUp={
+                (keyEvent) => {
+                if(keyEvent.target.value !== "") { 
+                    searchDocumentary(keyEvent.target.value)
+                } else {keyEvent.target.value = ""
+            }
+            }}
+            placeholder="Search for a documentary... " />
+    </>
+)
 }

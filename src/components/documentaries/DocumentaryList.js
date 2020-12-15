@@ -11,7 +11,7 @@ export const DocumentaryList = ( props ) => {
 // declaration of variables that will be used, the coresponding functions that set them, and the contexts that
 // they were assigned to in their providers
 
-    const { documentaries, getDocumentaries, removeDocumentary } = useContext(DocumentaryContext)
+    const { documentaries, getDocumentaries } = useContext(DocumentaryContext)
     const { watchStatuses, getWatchStatuses } = useContext(WatchStatusContext)
     const { docCategories, getDocCategories } = useContext(DocCategoryContext)
 
