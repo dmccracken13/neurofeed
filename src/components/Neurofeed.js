@@ -24,11 +24,11 @@ export const Neurofeed = (props) => (
                     <h2>Neurofeed</h2>
                     <small>Feed Your Head!</small>
                     
-                        {/* <DocCategoryProvider>
+                        <DocCategoryProvider>
                             <WatchStatusProvider>
                                 <CategoryProvider>
                                     <DocumentaryProvider>
-                                    <Route path="/" render={
+                                    <Route exact path="/" render={
                                         props => 
                                             <>
                                                 <Link to={`/form`}>Add Documentary</Link>
@@ -39,9 +39,9 @@ export const Neurofeed = (props) => (
                                     </DocumentaryProvider>
                                 </CategoryProvider>
                             </WatchStatusProvider>
-                        </DocCategoryProvider> */}
+                        </DocCategoryProvider>
 
-                        <Route exact path="/">
+                        {/* <Route exact path="/">
                             <DocCategoryProvider>
                                 <WatchStatusProvider>
                                     <CategoryProvider>
@@ -53,13 +53,13 @@ export const Neurofeed = (props) => (
                                     </CategoryProvider>
                                 </WatchStatusProvider>
                             </DocCategoryProvider>
-                        </Route>
+                        </Route> */}
 
                         <DocCategoryProvider>
                             <WatchStatusProvider>
                                 <CategoryProvider>
                                     <DocumentaryProvider>
-                                    <Route path="/form" render={
+                                    <Route exact path="/form" render={
                                         props => 
                                             <>
                                                 <DocumentarySearch />

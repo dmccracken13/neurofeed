@@ -38,6 +38,7 @@ export const DocumentaryList = ( props ) => {
                             documentary={documentary} 
                             docCats={filteredDocCats}
                             watchStatus={watchStat}
+                            props={props}
                             />
                         }) 
                     }

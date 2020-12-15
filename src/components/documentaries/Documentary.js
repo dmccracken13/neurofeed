@@ -22,7 +22,7 @@ export const Documentary = ({ documentary, docCats, watchStatus, props }) => {
                     () => {
                     removeDocumentary(+documentary.id)  
                                     .then(() => {
-                                    props.history.push("/documentaries")
+                                    props.history.push("/")
                                     })
                     }
                 }>

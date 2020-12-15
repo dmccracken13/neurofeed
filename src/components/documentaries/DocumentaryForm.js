@@ -46,6 +46,7 @@ export const DocumentaryForm = (props) => {
                 categoryId: parseInt(data.categoryId)
             })
         })
+        .then(props.history.push(`/`))
     }
 
         // react hook responsible for envoking provider functions to get data to be used on the form
@@ -85,7 +86,7 @@ export const DocumentaryForm = (props) => {
                 </select>
 
                 <label>Choose your rating</label>
-                <select name="rating" ref={register({ required: true })}>
+                <select name="rating" ref={register({ required: false })}>
                         <option value="">Select...</option>
                         {ratingsArray.map((rating, i) => (
                             <option key={i} value={i}>
@@ -108,9 +109,11 @@ export const DocumentaryForm = (props) => {
                         ))}
                 </select>
 
-                <button type="submit" onClick={() => {
+                <button type="submit">Submit</button> 
+
+                {/* <button type="submit" onClick={() => {
                 props.history.push(`/`)
-                }}>Submit</button>
+                }}>Submit</button> */}
 
             </form>
         </>
