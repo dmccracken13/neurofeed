@@ -5,7 +5,7 @@ import { WatchStatusContext } from "../watchStatuses/WatchStatusProvider"
 import { DocumentaryContext } from "./DocumentaryProvider"
 import { DocCategoryContext } from "../docCategories/DocCategoryProvider"
 
-export const DocumentaryForm = () => {
+export const DocumentaryForm = (props) => {
     const { register, handleSubmit } = useForm();
 
     // all the arrays and functions that get, set, and add them are declared for the contexts they will be used in
@@ -46,6 +46,7 @@ export const DocumentaryForm = () => {
                 categoryId: parseInt(data.categoryId)
             })
         })
+        .then(props.history.push(`/`))
     }
 
         // react hook responsible for envoking provider functions to get data to be used on the form
@@ -85,7 +86,7 @@ export const DocumentaryForm = () => {
                 </select>
 
                 <label>Choose your rating</label>
-                <select name="rating" ref={register({ required: true })}>
+                <select name="rating" ref={register({ required: false })}>
                         <option value="">Select...</option>
                         {ratingsArray.map((rating, i) => (
                             <option key={i} value={i}>
@@ -108,7 +109,11 @@ export const DocumentaryForm = () => {
                         ))}
                 </select>
 
-                <button type="submit">Submit</button>
+                <button type="submit">Submit</button> 
+
+                {/* <button type="submit" onClick={() => {
+                props.history.push(`/`)
+                }}>Submit</button> */}
 
             </form>
         </>

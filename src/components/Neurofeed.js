@@ -14,7 +14,7 @@ import { CategoryList } from "./categories/CategoryList"
 import { DocumentaryForm } from "./documentaries/DocumentaryForm"
 import { DocumentarySearch } from "./documentaries/DocumentarySearch"
 
-export const Neurofeed = () => (
+export const Neurofeed = (props) => (
     <>
                 <Route render={() => {
              // The user id is saved under the key app_user_id in local Storage. Change below if needed!
@@ -24,32 +24,52 @@ export const Neurofeed = () => (
                     <h2>Neurofeed</h2>
                     <small>Feed Your Head!</small>
                     
-                    <Route exact path="/">
                         <DocCategoryProvider>
                             <WatchStatusProvider>
                                 <CategoryProvider>
                                     <DocumentaryProvider>
-                                        <Link to={`/form`}>Add Documentary</Link>
-                                        <CategoryList /> 
-                                        <DocumentaryList />
+                                    <Route exact path="/" render={
+                                        props => 
+                                            <>
+                                                <Link to={`/form`}>Add Documentary</Link>
+                                                <CategoryList />
+                                                <DocumentaryList {...props} />
+                                            </>
+                                    } />   
                                     </DocumentaryProvider>
                                 </CategoryProvider>
                             </WatchStatusProvider>
                         </DocCategoryProvider>
-                    </Route>
 
-                    <Route path="/form">
+                        {/* <Route exact path="/">
+                            <DocCategoryProvider>
+                                <WatchStatusProvider>
+                                    <CategoryProvider>
+                                        <DocumentaryProvider>
+                                            <Link to={`/form`}>Add Documentary</Link>
+                                            <CategoryList /> 
+                                            <DocumentaryList />
+                                        </DocumentaryProvider>
+                                    </CategoryProvider>
+                                </WatchStatusProvider>
+                            </DocCategoryProvider>
+                        </Route> */}
+
                         <DocCategoryProvider>
                             <WatchStatusProvider>
                                 <CategoryProvider>
                                     <DocumentaryProvider>
-                                            <DocumentarySearch />
-                                            <DocumentaryForm />
+                                    <Route exact path="/form" render={
+                                        props => 
+                                            <>
+                                                <DocumentarySearch />
+                                                <DocumentaryForm {...props} />
+                                            </>
+                                    } />   
                                     </DocumentaryProvider>
                                 </CategoryProvider>
                             </WatchStatusProvider>
                         </DocCategoryProvider>
-                    </Route>
                 </>
                 )
             } else {
