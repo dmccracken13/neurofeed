@@ -7,7 +7,7 @@ import React, { useState } from "react"
 export const FriendContext = React.createContext()
 
 /*
- This component establishes what data can be used.
+    This component establishes what data can be used.
  */
 export const FriendProvider = (props) => {
     const [users, setUsers] = useState([])

@@ -4,6 +4,7 @@ import { DocumentaryContext } from "./DocumentaryProvider"
 import { Documentary } from "./Documentary"
 import { WatchStatusContext } from "../watchStatuses/WatchStatusProvider"
 import { DocCategoryContext } from "../docCategories/DocCategoryProvider"
+import { FriendContext } from "../friends/FriendProvider"
 
 
 // function responsible for rendering lists of ducmentaries to the dom
@@ -15,13 +16,16 @@ export const DocumentaryList = ( props ) => {
     const { documentaries, getDocumentaries } = useContext(DocumentaryContext)
     const { watchStatuses, getWatchStatuses } = useContext(WatchStatusContext)
     const { docCategories, getDocCategories } = useContext(DocCategoryContext)
+    const { users, getUsers } = useContext(FriendContext)
 
+    // Create a variable to hold the value of the current logged in user 
     const userId =  parseInt(localStorage.getItem("app_user_id"))
 // React hook used to invoke functions to get the data that will be used 
 
     useEffect(()=>{
         getWatchStatuses()
         .then(getDocCategories)
+        .then(getUsers)
         .then(getDocumentaries)
     }, [])
 
@@ -39,12 +43,13 @@ export const DocumentaryList = ( props ) => {
                         .map(documentary => {
                         const filteredDocCats = docCategories.filter(dc => dc.documentaryId === documentary.id)
                         const watchStat = watchStatuses.find(w => w.id === documentary.watchStatusId)
-
+                        const user = users.find(u => u.id === userId)
                             return <Documentary key={documentary.id} 
                             documentary={documentary} 
                             docCats={filteredDocCats}
                             watchStatus={watchStat}
                             props={props}
+                            user={user}
                             />
                         }) 
                     }
@@ -56,14 +61,14 @@ export const DocumentaryList = ( props ) => {
                         .filter(d => d.userId === userId)
                         .map(documentary => {
                             const filteredDocCats = docCategories.filter(dc => dc.documentaryId === documentary.id)
-                            // console.log(filteredDocCats)
                             const watchStat = watchStatuses.find(w => w.id === documentary.watchStatusId)
-                            
+                            const user = users.find(u => u.id === userId)
                             return<Documentary key={documentary.id} 
                             documentary={documentary} 
                             docCats={filteredDocCats}
                             watchStatus={watchStat}
                             props={props}
+                            user={user}
                             />
                         })
                     }
