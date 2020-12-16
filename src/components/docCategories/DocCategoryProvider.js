@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 
 /*
     The context is imported and used by individual components
@@ -7,7 +7,7 @@ import React, { useState, useEffect } from "react"
 export const DocCategoryContext = React.createContext()
 
 /*
- This component establishes what data can be used.
+This component establishes what data can be used.
  */
 export const DocCategoryProvider = (props) => {
     const [docCategories, setDocCategories] = useState([])

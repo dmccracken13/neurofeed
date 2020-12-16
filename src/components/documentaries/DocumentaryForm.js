@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom"
 import { CategoryContext } from "../categories/CategoryProvider"
 import { WatchStatusContext } from "../watchStatuses/WatchStatusProvider"
 import { DocumentaryContext } from "./DocumentaryProvider"
@@ -19,6 +20,8 @@ export const DocumentaryForm = (props) => {
     // array which will be used to populate the ratings options for the ratings drop down in the form
 
     const ratingsArray = ["1 Star", "2 Stars", "3 Stars", "3 Stars", "4 Stars", "5 Stars"]
+
+    const userId =  parseInt(localStorage.getItem("app_user_id"))
 
 // The on submit function takes in data from the form input field refs and invokes the 
 // functions that will post the data to the local API
@@ -56,66 +59,65 @@ export const DocumentaryForm = (props) => {
         },  [])
 
         // Then DocumentaryForm returns the jsx representation for the form 
+            return (
+                <>
+                    <form className="documentary_form" onSubmit={handleSubmit(onSubmit)}>
+                    {/* Drop down for selecting a documentary, which has it's options populated 
+                    by mapping through the array containing the resulte from what is typed into the 
+                    DocumentarySearch component  */}
+                        <label>Select a documentary</label>
+                        <select name="title" ref={register({ required: true })}>
+                            <option value="0">Select...</option>
+                            {filteredDocs.map(st => (
+                                    <option key={st.id} value={st.title}>
+                                        {st.title}
+                                    </option>
+                                ))}
+                        </select>
 
-    return (
-        <>
-            <form className="documentary_form" onSubmit={handleSubmit(onSubmit)}>
-            {/* Drop down for selecting a documentary, which has it's options populated 
-            by mapping through the array containing the resulte from what is typed into the 
-            DocumentarySearch component  */}
-                <label>Select a documentary</label>
-                <select name="title" ref={register({ required: true })}>
-                    <option value="0">Select...</option>
-                    {filteredDocs.map(st => (
-                            <option key={st.id} value={st.title}>
-                                {st.title}
-                            </option>
-                        ))}
-                </select>
+                        {/* Dropdown for selecting a watch list, which has it's options populated by envoking the 
+                        getWatchStatuses function, and mapping through the watchStatuses array that it sets       */}
+                        <label>Choose a watch list</label>
+                        <select name="watchStatusId" ref={register({ required: true })}>
+                            <option value="0">Select...</option>
+                            {watchStatuses.map(ws => (
+                                    <option key={ws.id} value={ws.id}>
+                                        {ws.name}
+                                    </option>
+                                ))}
+                        </select>
 
-                {/* Dropdown for selecting a watch list, which has it's options populated by envoking the 
-                getWatchStatuses function, and mapping through the watchStatuses array that it sets       */}
-                <label>Choose a watch list</label>
-                <select name="watchStatusId" ref={register({ required: true })}>
-                    <option value="0">Select...</option>
-                    {watchStatuses.map(ws => (
-                            <option key={ws.id} value={ws.id}>
-                                {ws.name}
-                            </option>
-                        ))}
-                </select>
+                        <label>Choose your rating</label>
+                        <select name="rating" ref={register({ required: false })}>
+                                <option value="">Select...</option>
+                                {ratingsArray.map((rating, i) => (
+                                    <option key={i} value={rating}>
+                                        {rating}
+                                    </option>
+                                ))}
+                        </select>
 
-                <label>Choose your rating</label>
-                <select name="rating" ref={register({ required: false })}>
-                        <option value="">Select...</option>
-                        {ratingsArray.map((rating, i) => (
-                            <option key={i} value={i}>
-                                {rating}
-                            </option>
-                        ))}
-                </select>
+                        
+                        <label>Write a review</label>
+                        <input name="review" type="text" defaultValue="" ref={register} />
 
-                
-                <label>Write a review</label>
-                <input name="review" type="text" defaultValue="" ref={register} />
+                        <label>Choose your categories</label>
+                        <select name="categoryId" ref={register({ required: true })}>
+                            <option value="0">Select...</option>
+                            {categories
+                            .filter(c => c.userId === userId)
+                            .map(c => (
+                                    <option key={c.id} value={c.id}>
+                                        {c.name}
+                                    </option>
+                                ))}
+                        </select>
 
-                <label>Choose your categories</label>
-                <select name="categoryId" ref={register({ required: true })}>
-                    <option value="0">Select...</option>
-                    {categories.map(c => (
-                            <option key={c.id} value={c.id}>
-                                {c.name}
-                            </option>
-                        ))}
-                </select>
+                        <button type="submit">Submit</button> 
 
-                <button type="submit">Submit</button> 
+                        <Link to={`/`}>Back</Link>
 
-                {/* <button type="submit" onClick={() => {
-                props.history.push(`/`)
-                }}>Submit</button> */}
-
-            </form>
-        </>
-    );
-}
+                    </form>
+                </>
+            );
+} 

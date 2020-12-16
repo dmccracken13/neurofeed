@@ -2,6 +2,10 @@ import React, { useRef } from "react"
 import { Link } from "react-router-dom";
 import "./Login.css"
 
+export const Logout = () =>{
+    localStorage.removeItem("app_login_id")
+}
+
 
 export const Login = props => {
     const email = useRef()
