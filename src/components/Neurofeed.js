@@ -1,9 +1,10 @@
 import React from "react"
 import { Route, Redirect } from "react-router-dom"
-// import { Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { DocumentaryProvider } from "./documentaries/DocumentaryProvider"
 import { DocumentaryList } from "./documentaries/DocumentaryList"
 import { Login } from "./auth/Login"
+import { Logout } from "./auth/Login"
 import { Register } from "./auth/Register"
 import { CategoryProvider } from "./categories/CategoryProvider"
 import { WatchStatusProvider } from "./watchStatuses/WatchStatusProvider"
@@ -28,7 +29,8 @@ export const Neurofeed = (props) => (
                                     <DocumentaryProvider>
                                     <Route exact path="/" render={
                                         props => 
-                                            <>
+                                            <>  
+                                                <Link className="logout" to="/login" onClick={()=>{Logout()}}>logout</Link>
                                                 <CategoryList />
                                                 <DocumentaryList {...props} />
                                             </>
