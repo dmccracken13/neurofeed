@@ -12,6 +12,7 @@ import { DocCategoryProvider } from "./docCategories/DocCategoryProvider"
 import { CategoryList } from "./categories/CategoryList"
 import { DocumentaryForm } from "./documentaries/DocumentaryForm"
 import { DocumentarySearch } from "./documentaries/DocumentarySearch"
+import { FriendProvider} from "./friends/FriendProvider"
 
 export const Neurofeed = (props) => (
     <>
@@ -23,22 +24,24 @@ export const Neurofeed = (props) => (
                     <h2>Neurofeed</h2>
                     <small>Feed Your Head!</small>
                     
-                        <DocCategoryProvider>
-                            <WatchStatusProvider>
-                                <CategoryProvider>
-                                    <DocumentaryProvider>
-                                    <Route exact path="/" render={
-                                        props => 
-                                            <>  
-                                                <Link className="logout" to="/login" onClick={()=>{Logout()}}>logout</Link>
-                                                <CategoryList />
-                                                <DocumentaryList {...props} />
-                                            </>
-                                    } />   
-                                    </DocumentaryProvider>
-                                </CategoryProvider>
-                            </WatchStatusProvider>
-                        </DocCategoryProvider>
+                        <FriendProvider>
+                            <DocCategoryProvider>
+                                <WatchStatusProvider>
+                                    <CategoryProvider>
+                                        <DocumentaryProvider>
+                                        <Route exact path="/" render={
+                                            props => 
+                                                <>  
+                                                    <Link className="logout" to="/login" onClick={()=>{Logout()}}>logout</Link>
+                                                    <CategoryList />
+                                                    <DocumentaryList {...props} />
+                                                </>
+                                        } />   
+                                        </DocumentaryProvider>
+                                    </CategoryProvider>
+                                </WatchStatusProvider>
+                            </DocCategoryProvider>
+                        </FriendProvider>
 
                         <DocCategoryProvider>
                             <WatchStatusProvider>

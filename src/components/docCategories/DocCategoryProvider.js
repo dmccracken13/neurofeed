@@ -7,7 +7,7 @@ import React, { useState } from "react"
 export const DocCategoryContext = React.createContext()
 
 /*
- This component establishes what data can be used.
+This component establishes what data can be used.
  */
 export const DocCategoryProvider = (props) => {
     const [docCategories, setDocCategories] = useState([])

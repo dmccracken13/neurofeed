@@ -2,7 +2,7 @@ import React, { useContext } from "react"
 import { DocumentaryContext } from "./DocumentaryProvider"
 
 export const DocumentarySearch = () => {
-    const { searchDocumentary } = useContext(DocumentaryContext)
+    const { searchDocumentary, setFilteredDocs } = useContext(DocumentaryContext)
 
 return (
     <>
@@ -14,7 +14,7 @@ return (
                 if(keyEvent.target.value !== "") { 
                     searchDocumentary(keyEvent.target.value)
                     // console.log(keyEvent.target.value)
-                } else {keyEvent.target.value = ""
+                } else {setFilteredDocs([]) // Research more- Ideally have call back function injected into component 
             }
             }}
             placeholder="Search for a documentary... " />
