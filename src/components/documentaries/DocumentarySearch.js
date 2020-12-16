@@ -13,7 +13,7 @@ return (
                 (keyEvent) => {
                 if(keyEvent.target.value !== "") { 
                     searchDocumentary(keyEvent.target.value)
-                    console.log(keyEvent.target.value)
+                    // console.log(keyEvent.target.value)
                 } else {keyEvent.target.value = ""
             }
             }}

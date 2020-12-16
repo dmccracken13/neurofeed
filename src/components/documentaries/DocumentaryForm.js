@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom"
 import { CategoryContext } from "../categories/CategoryProvider"
 import { WatchStatusContext } from "../watchStatuses/WatchStatusProvider"
 import { DocumentaryContext } from "./DocumentaryProvider"
@@ -19,6 +20,8 @@ export const DocumentaryForm = (props) => {
     // array which will be used to populate the ratings options for the ratings drop down in the form
 
     const ratingsArray = ["1 Star", "2 Stars", "3 Stars", "3 Stars", "4 Stars", "5 Stars"]
+
+    const userId =  parseInt(localStorage.getItem("app_user_id"))
 
 // The on submit function takes in data from the form input field refs and invokes the 
 // functions that will post the data to the local API
@@ -88,7 +91,7 @@ export const DocumentaryForm = (props) => {
                         <select name="rating" ref={register({ required: false })}>
                                 <option value="">Select...</option>
                                 {ratingsArray.map((rating, i) => (
-                                    <option key={i} value={i}>
+                                    <option key={i} value={rating}>
                                         {rating}
                                     </option>
                                 ))}
@@ -101,7 +104,9 @@ export const DocumentaryForm = (props) => {
                         <label>Choose your categories</label>
                         <select name="categoryId" ref={register({ required: true })}>
                             <option value="0">Select...</option>
-                            {categories.map(c => (
+                            {categories
+                            .filter(c => c.userId === userId)
+                            .map(c => (
                                     <option key={c.id} value={c.id}>
                                         {c.name}
                                     </option>
@@ -110,9 +115,7 @@ export const DocumentaryForm = (props) => {
 
                         <button type="submit">Submit</button> 
 
-                        {/* <button type="submit" onClick={() => {
-                        props.history.push(`/`)
-                        }}>Submit</button> */}
+                        <Link to={`/`}>Back</Link>
 
                     </form>
                 </>
