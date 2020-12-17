@@ -53,7 +53,10 @@ export const Neurofeed = (props) => (
                                                 <DocumentarySearch />
                                                 <DocumentaryForm {...props} />
                                             </>
-                                    } />   
+                                    } /> 
+                                    <Route exact path="/documentaries/edit/:documentaryId(\d+)" render={
+                                        props => <DocumentaryForm {...props} />
+                                    } />  
                                     </DocumentaryProvider>
                                 </CategoryProvider>
                             </WatchStatusProvider>

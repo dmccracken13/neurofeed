@@ -68,12 +68,24 @@ export const DocumentaryProvider = (props) => {
             .then(getDocumentaries)
     }
 
+    const updateDoc = documentary => {
+        return fetch(`http://localhost:8088/documentaries/${documentary.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(documentary)
+        })
+            .then(getDocumentaries)
+    }
+
 // Return the context for usage, defining what this component will expose to other components 
 
     return (
         <DocumentaryContext.Provider value={{
             documentaries, addDocumentary, getDocumentaries, searchDocumentary, 
-            searchTerms, setTerms, filteredDocs, setFilteredDocs, removeDocumentary, getDocById
+            filteredDocs, setFilteredDocs, removeDocumentary, getDocById, updateDoc,
+            searchTerms, setTerms,
         }}>
             {props.children}
         </DocumentaryContext.Provider>
