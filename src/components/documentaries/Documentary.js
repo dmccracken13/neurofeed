@@ -10,7 +10,7 @@ export const Documentary = ({ documentary, docCats, watchStatus, user, props }) 
         <section className="documentary">
             <div className="documentary__user">Watcher: {user.name}</div>
             <div className="documentary__name">Title: {documentary.title}</div>
-            <img src={documentary.poster} alt="Poster"></img>
+            {documentary.poster === `https://image.tmdb.org/t/p/w500null` ? "No Poster Available" : <img src={documentary.poster} alt="Poster"></img>}
             <div className="documentary__status">Watch Status: {watchStatus.name}</div>
             <button onClick={() => {
                 props.history.push(`/documentaries/edit/${documentary.id}`)
