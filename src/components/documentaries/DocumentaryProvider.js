@@ -70,7 +70,7 @@ export const DocumentaryProvider = (props) => {
 
     const updateDoc = documentary => {
         return fetch(`http://localhost:8088/documentaries/${documentary.id}`, {
-            method: "PUT",
+            method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
             },
