@@ -14,7 +14,7 @@ export const DocumentaryForm = (props) => {
 
     const { categories, getCategories } = useContext(CategoryContext)
     const { watchStatuses, getWatchStatuses } = useContext(WatchStatusContext)
-    const { addDocumentary, filteredDocs, documentaries, getDocumentaries } = useContext(DocumentaryContext)
+    const { addDocumentary, filteredDocs, documentaries, getDocumentaries, updateDoc } = useContext(DocumentaryContext)
     const { addDocCategory } = useContext(DocCategoryContext)
 
     const [documentary, setDocumentary] = useState({})
@@ -37,99 +37,100 @@ export const DocumentaryForm = (props) => {
 
 // The on submit function takes in data from the form input field refs and invokes the 
 // functions that will post the data to the local API
-        const onSubmit = (data) => {
-        // find a doc from the filtered array who's title matches the input field title
-        const foundDoc = filteredDocs.find(doc => doc.title === data.title)
-         // create a new documentary object to get passed through addDocumentary to be posted to the api
-        const newDocObj = {
-            userId: parseInt(localStorage.getItem("app_user_id")),
-            title: foundDoc.title, 
-            watchStatusId: parseInt(data.watchStatusId),
-            poster: `https://image.tmdb.org/t/p/w500${foundDoc.poster_path}`,
-            synapsis: foundDoc.overview,
-            rating: data.rating,
-            review: data.review 
-        } 
-        // addDocumentary is invoked with newDocObj being passed as the argument 
-        addDocumentary(newDocObj)
-        // Then, addDocumentary returns a newly created docObj, the reponses is parsed, and passed through 
-        // addDocCategory so that the recently added documentary's id can be accessed and added to the new 
-        // docCatObj before it is posted to the API
-        .then(newlyCreatedDoc => {
-            addDocCategory({
-                documentaryId: newlyCreatedDoc.id,
-                categoryId: parseInt(data.categoryId)
-            })
+const createNewDoc= (data) => {
+    // find a doc from the filtered array who's title matches the input field title
+    const foundDoc = filteredDocs.find(doc => doc.title === data.title)
+     // create a new documentary object to get passed through addDocumentary to be posted to the api
+    const newDocObj = {
+        userId: parseInt(localStorage.getItem("app_user_id")),
+        title: foundDoc.title, 
+        watchStatusId: parseInt(data.watchStatusId),
+        poster: `https://image.tmdb.org/t/p/w500${foundDoc.poster_path}`,
+        synapsis: foundDoc.overview,
+        rating: data.rating,
+        review: data.review 
+    } 
+    // addDocumentary is invoked with newDocObj being passed as the argument 
+    addDocumentary(newDocObj)
+    // Then, addDocumentary returns a newly created docObj, the reponses is parsed, and passed through 
+    // addDocCategory so that the recently added documentary's id can be accessed and added to the new 
+    // docCatObj before it is posted to the API
+    .then(newlyCreatedDoc => {
+        addDocCategory({
+            documentaryId: newlyCreatedDoc.id,
+            categoryId: parseInt(data.categoryId)
         })
-        .then(props.history.push(`/`))
-    }
+    })
+    .then(props.history.push(`/`))
+}
 
-        // react hook responsible for envoking provider functions to get data to be used on the form
-        useEffect(()=>{
-            getWatchStatuses()
-            .then(getCategories)
-            .then(getDocumentaries)
-        },  [])
+const patchUpdatedDoc= (data) => {
+     // create a new documentary object to get passed through addDocumentary to be posted to the api
+    
+    const editedDocObj = {
+        id: documentary.id,
+        watchStatusId: parseInt(data.watchStatusId),
+        rating: data.rating,
+        review: data.review 
+    } 
+    // addDocumentary is invoked with newDocObj being passed as the argument 
+    updateDoc(editedDocObj)
+    .then(props.history.push(`/`))
+}
 
-        useEffect(() => {
-            getDocInEditMode()
-        }, [documentaries])
+    // react hook responsible for envoking provider functions to get data to be used on the form
+    useEffect(()=>{
+        getWatchStatuses()
+        .then(getDocumentaries)
+        .then(getCategories)
+    },  [])
 
-        if (editMode) {
-        
-                return ( // Then DocumentaryForm returns the jsx representation for the form
-                <>
-                    <form className="documentary_form" onSubmit={handleSubmit(onSubmit)}>
+    useEffect(()=>{
+        getDocInEditMode()
+    },  [documentaries])
 
-                        {/* Dropdown for selecting a watch list, which has it's options populated by envoking the 
-                        getWatchStatuses function, and mapping through the watchStatuses array that it sets       */}
-                        <label>Choose a watch list</label>
-                        <select name="watchStatusId" ref={register({ required: true })}>
-                            <option value="0">Select...</option>
-                            {watchStatuses.map(ws => (
-                                    <option key={ws.id} value={ws.id}>
-                                        {ws.name}
-                                    </option>
-                                ))}
-                        </select>
-
-                        <label>Choose your rating</label>
-                        <select name="rating" ref={register({ required: false })}>
-                                <option value="">Select...</option>
-                                {ratingsArray.map((rating, i) => (
-                                    <option key={i} value={rating}>
-                                        {rating}
-                                    </option>
-                                ))}
-                        </select>
-
-                        {/* change ref to on change to capture value without needing data on submit  */}
-                        <label>Write a review</label>
-                        <input name="review" type="text" defaultValue="" ref={register} />
-
-                        <label>Choose your categories</label>
-                        <select name="categoryId" ref={register({ required: true })}>
-                            <option value="0">Select...</option>
-                            {categories
-                            .filter(c => c.userId === userId)
-                            .map(c => (
-                                    <option key={c.id} value={c.id}>
-                                        {c.name}
-                                    </option>
-                                ))}
-                        </select>
-
-                        <button type="submit">Submit</button> 
-
-                        <Link to={`/`}>Back</Link>
-
-                    </form>
-                </>
-            );
-        } else {  
-            return ( // Then DocumentaryForm returns the jsx representation for the form
+    if(editMode) {
+        return (
             <>
-                <form className="documentary_form" onSubmit={handleSubmit(onSubmit)}>
+                <form className="documentary_form" onSubmit={handleSubmit(patchUpdatedDoc)}>
+                    {/* Dropdown for selecting a watch list, which has it's options populated by envoking the 
+                    getWatchStatuses function, and mapping through the watchStatuses array that it sets       */}
+                    <label>Choose a watch list</label>
+                    <select name="watchStatusId" ref={register({ required: true })}>
+                        <option value="0">Select...</option>
+                        {watchStatuses.map(ws => (
+                                <option key={ws.id} value={ws.id}>
+                                    {ws.name}
+                                </option>
+                            ))}
+                    </select>
+
+                    <label>Choose your rating</label>
+                    <select name="rating" ref={register({ required: false })}>
+                            <option value="">Select...</option>
+                            {ratingsArray.map((rating, i) => (
+                                <option key={i} value={rating}>
+                                    {rating}
+                                </option>
+                            ))}
+                    </select>
+
+                    
+                    <label>Write a review</label>
+                    <input name="review" type="text" defaultValue="" ref={register} />
+
+                    <button type="submit">Submit</button> 
+
+                    <Link to={`/`}>Back</Link>
+
+                </form>
+            </>
+        );
+    } else {
+        // The DocumentaryForm returns the jsx representation for the form 
+        return (
+            <>
+                <form className="documentary_form" onSubmit={handleSubmit(createNewDoc)}>
                 {/* Drop down for selecting a documentary, which has it's options populated 
                 by mapping through the array containing the resulte from what is typed into the 
                 DocumentarySearch component  */}
@@ -165,7 +166,7 @@ export const DocumentaryForm = (props) => {
                             ))}
                     </select>
 
-                    {/* change ref to on change to capture value without needing data on submit  */}
+                    
                     <label>Write a review</label>
                     <input name="review" type="text" defaultValue="" ref={register} />
 
@@ -188,6 +189,5 @@ export const DocumentaryForm = (props) => {
                 </form>
             </>
         );
-
     }
-}
+} 

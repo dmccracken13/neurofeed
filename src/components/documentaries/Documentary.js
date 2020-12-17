@@ -12,9 +12,6 @@ export const Documentary = ({ documentary, docCats, watchStatus, user, props }) 
             <div className="documentary__name">Title: {documentary.title}</div>
             <img src={documentary.poster} alt="Poster"></img>
             <div className="documentary__status">Watch Status: {watchStatus.name}</div>
-            <button>
-                    Update
-            </button>
             <button onClick={() => {
                 props.history.push(`/documentaries/edit/${documentary.id}`)
             }}>Update
