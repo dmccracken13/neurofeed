@@ -7,7 +7,7 @@ import { DocumentaryContext } from "./DocumentaryProvider"
 import { DocCategoryContext } from "../docCategories/DocCategoryProvider"
 
 export const DocumentaryForm = (props) => {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, errors, ErrorMessage } = useForm();
 
     // all the arrays and functions that get, set, and add them are declared for the contexts they will be used in
     // after their context providers are imported
@@ -39,7 +39,7 @@ export const DocumentaryForm = (props) => {
 // functions that will post the data to the local API
 const createNewDoc= (data) => {
     // find a doc from the filtered array who's title matches the input field title
-    const foundDoc = filteredDocs.find(doc => doc.title === data.title)
+    const foundDoc = filteredDocs.find(doc => doc.title === data.title) 
      // create a new documentary object to get passed through addDocumentary to be posted to the api
     const newDocObj = {
         userId: parseInt(localStorage.getItem("app_user_id")),
@@ -106,7 +106,7 @@ const patchUpdatedDoc= (data) => {
                     </select>
 
                     <label>Choose your rating</label>
-                    <select name="rating" ref={register({ required: false })}>
+                    <select name="rating" ref={register({ required: true })}>
                             <option value="">Select...</option>
                             {ratingsArray.map((rating, i) => (
                                 <option key={i} value={rating}>
@@ -157,7 +157,7 @@ const patchUpdatedDoc= (data) => {
                     </select>
 
                     <label>Choose your rating</label>
-                    <select name="rating" ref={register({ required: false })}>
+                    <select name="rating" ref={register({ required: true })}>
                             <option value="">Select...</option>
                             {ratingsArray.map((rating, i) => (
                                 <option key={i} value={rating}>
