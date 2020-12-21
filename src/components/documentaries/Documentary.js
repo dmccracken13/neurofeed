@@ -16,7 +16,7 @@ export const Documentary = ({ documentary, docCats, watchStatus, user, props }) 
                 props.history.push(`/documentaries/edit/${documentary.id}`)
             }}>Update
             </button>
-            <div className="documentary__synapsis">Synopsis: {documentary.synapsis}</div>
+            <div className="documentary__synopsis">Synopsis: {documentary.synapsis}</div>
             {documentary.rating === "" ? "" : <div className="documentary__rating">Rating: {documentary.rating}</div>}
             <div className="documentary__categories">Categories: { docCats.map(dc => dc.category.name) }</div>
             {documentary.review === "" ? "" :<div className="documentary__review">Review: {documentary.review}</div>}
