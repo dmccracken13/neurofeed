@@ -17,9 +17,9 @@ export const Documentary = ({ documentary, docCats, watchStatus, user, props }) 
             }}>Update
             </button>
             <div className="documentary__synapsis">Synopsis: {documentary.synapsis}</div>
-            <div className="documentary__rating">Rating: {documentary.rating}</div>
+            {documentary.rating === "" ? "" : <div className="documentary__rating">Rating: {documentary.rating}</div>}
             <div className="documentary__categories">Categories: { docCats.map(dc => dc.category.name) }</div>
-            <div className="documentary__review">Review: {documentary.review}</div>
+            {documentary.review === "" ? "" :<div className="documentary__review">Review: {documentary.review}</div>}
             <button type="button"className="remove_button" id={documentary.id}
                 onClick={
                     () => {
