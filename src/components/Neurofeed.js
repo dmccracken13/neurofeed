@@ -1,5 +1,6 @@
 import React from "react"
 import { Route, Redirect } from "react-router-dom"
+import "bootstrap/dist/css/bootstrap.min.css"
 import { Link } from "react-router-dom"
 import { DocumentaryProvider } from "./documentaries/DocumentaryProvider"
 import { DocumentaryList } from "./documentaries/DocumentaryList"

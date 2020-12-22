@@ -7,29 +7,33 @@ export const Documentary = ({ documentary, docCats, watchStatus, user, props }) 
 
 
     return(
-        <section className="documentary">
-            <div className="documentary__user">Watcher: {user.name}</div>
-            <div className="documentary__name">Title: {documentary.title}</div>
-            {documentary.poster === `https://image.tmdb.org/t/p/w500null` ? "No Poster Available" : <img src={documentary.poster} alt="Poster"></img>}
-            <div className="documentary__status">Watch Status: {watchStatus.name}</div>
-            <button onClick={() => {
-                props.history.push(`/documentaries/edit/${documentary.id}`)
-            }}>Update
-            </button>
-            <div className="documentary__synopsis">Synopsis: {documentary.synapsis}</div>
-            {documentary.rating === "" ? "" : <div className="documentary__rating">Rating: {documentary.rating}</div>}
-            <div className="documentary__categories">Categories: { docCats.map(dc => dc.category.name) }</div>
-            {documentary.review === "" ? "" :<div className="documentary__review">Review: {documentary.review}</div>}
-            <button type="button"className="remove_button" id={documentary.id}
-                onClick={
-                    () => {
-                    removeDocumentary(+documentary.id)  
-                                    .then(() => {
-                                    props.history.push("/")
-                                    })
-                    }
-                }>
-                Remove
-            </button>                        
-        </section>
+        <div className="card bg-secondary text-light border-primary" style={{ width: '18rem' }}>
+                <h4 className="card-header">Watcher: {user.name}</h4>
+                {documentary.poster === `https://image.tmdb.org/t/p/w500null` ? "No Poster Available" : <img className="card-img-top" src={documentary.poster} style={{ width: '18rem', height: '24rem' }} alt="Poster"></img>}
+                <div className= "card-body">
+                    <h3 className="card-title">{documentary.title}</h3>
+                    <div className="card-text">Synopsis: {documentary.synapsis}</div>
+                </div>
+                <ul className="list-group-flush bg-light text-dark">
+                    <li className="list-group-item">Watch Status: {watchStatus.name}</li>
+                    {documentary.rating === "" ? "" : <li className="list-group-item">Rating: {documentary.rating}</li>}
+                    <li className="list-group-item">Categories: #{ docCats.map(dc => dc.category.name) }</li>
+                    {documentary.review === "" ? "" :<li className="list-group-item">Review: {documentary.review}</li>}
+                </ul>
+                <button className="btn btn-primary" onClick={() => {
+                    props.history.push(`/documentaries/edit/${documentary.id}`)
+                }}>Update
+                </button>
+                <button type="button"className="btn btn-danger" id={documentary.id}
+                    onClick={
+                        () => {
+                        removeDocumentary(+documentary.id)  
+                                        .then(() => {
+                                        props.history.push("/")
+                                        })
+                        }
+                    }>
+                    Remove
+                </button>                        
+        </div>
 )}

@@ -32,10 +32,10 @@ export const DocumentaryList = ( props ) => {
     return (
         <>
             <h1>Watch Lists</h1>
-            <div className="documentaries">
+            <div className="list-group">
                 <Link to={`/form`}>Add Documentary</Link>
                 <h2>Want To Watch</h2>
-                <div className="documentaries_wantToWatch">
+                <div className="list-group-item">
                     {documentaries       // array of documentaries set by the getDocumentaries function 
                         .filter(d => d.watchStatusId === 1) 
                         .filter(d => d.userId === userId)
