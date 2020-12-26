@@ -5,7 +5,7 @@ import { Documentary } from "./Documentary"
 import { WatchStatusContext } from "../watchStatuses/WatchStatusProvider"
 import { DocCategoryContext } from "../docCategories/DocCategoryProvider"
 import { FriendContext } from "../friends/FriendProvider"
-
+import "./Documentary.css"
 
 // function responsible for rendering lists of ducmentaries to the dom
 
