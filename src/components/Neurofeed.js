@@ -24,7 +24,8 @@ export const Neurofeed = (props) => (
                     <>
                     <h2>Neurofeed</h2>
                     <small>Feed Your Head!</small>
-                    
+                    <Link className="logout" to="/login" onClick={()=>{Logout()}}>logout</Link>
+                    <div className="list-group">
                         <FriendProvider>
                             <DocCategoryProvider>
                                 <WatchStatusProvider>
@@ -33,9 +34,8 @@ export const Neurofeed = (props) => (
                                         <Route exact path="/" render={
                                             props => 
                                                 <>  
-                                                    <Link className="logout" to="/login" onClick={()=>{Logout()}}>logout</Link>
-                                                    <CategoryList />
-                                                    <DocumentaryList {...props} />
+                                                    <CategoryList className="list-group-item" />
+                                                    <DocumentaryList className="list-group-item" {...props} />
                                                 </>
                                         } />   
                                         </DocumentaryProvider>
@@ -62,6 +62,7 @@ export const Neurofeed = (props) => (
                                 </CategoryProvider>
                             </WatchStatusProvider>
                         </DocCategoryProvider>
+                    </div>
                 </>
                 )
             } else {

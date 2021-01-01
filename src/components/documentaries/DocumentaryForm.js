@@ -21,7 +21,7 @@ export const DocumentaryForm = (props) => {
 
     // array which will be used to populate the ratings options for the ratings drop down in the form
 
-    const ratingsArray = ["1 Star", "2 Stars", "3 Stars", "3 Stars", "4 Stars", "5 Stars"]
+    const ratingsArray = ["1 Star", "2 Stars", "3 Stars", "4 Stars", "5 Stars"]
 
     const userId =  parseInt(localStorage.getItem("app_user_id"))
 
@@ -130,7 +130,7 @@ const patchUpdatedDoc= (data) => {
         // The DocumentaryForm returns the jsx representation for the form 
         return (
             <>
-                <form className="documentary_form" onSubmit={handleSubmit(createNewDoc)}>
+                <form className="container" onSubmit={handleSubmit(createNewDoc)}>
                 {/* Drop down for selecting a documentary, which has it's options populated 
                 by mapping through the array containing the resulte from what is typed into the 
                 DocumentarySearch component  */}
@@ -157,7 +157,7 @@ const patchUpdatedDoc= (data) => {
                     </select>
 
                     <label>Choose your rating</label>
-                    <select name="rating" ref={register({ required: true })}>
+                    <select name="rating" ref={register({ required: false })}>
                             <option value="">Select...</option>
                             {ratingsArray.map((rating, i) => (
                                 <option key={i} value={rating}>
@@ -168,7 +168,7 @@ const patchUpdatedDoc= (data) => {
 
                     
                     <label>Write a review</label>
-                    <input name="review" type="text" defaultValue="" ref={register({ required: true })} />
+                    <input name="review" type="text" defaultValue="" ref={register({ required: false })} />
 
                     <label>Choose your categories</label>
                     <select name="categoryId" ref={register({ required: true })}>

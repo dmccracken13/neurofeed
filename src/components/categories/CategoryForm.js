@@ -17,9 +17,11 @@ export const CategoryForm = (props) => {
 
     return(
         <form className="category_form" onSubmit={handleSubmit(onSubmit)}>
-            <label>Add new cateogries</label>
-            <input name="category" type="text" defaultValue="" ref={register} />
-            <button type="submit">Submit</button>
+            <div className="column">
+                <h5>Add new cateogries </h5>
+                <input name="category" type="text" defaultValue="" ref={register} />
+                <button type="submit">Submit</button>
+            </div>
         </form>
     )
 

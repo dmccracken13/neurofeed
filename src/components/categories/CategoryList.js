@@ -13,18 +13,20 @@ export const CategoryList = () => {
 
     return (
         <>
+            <div className="column">
             <h1>Categories</h1>
-            <CategoryForm />
-            <div className="categories">
-                {categories
-                .filter(c => c.userId === userId)
-                .map(category => {
-                        return <Category key={category.id} 
-                        category={category} 
-                    
-                        />
-                })
-                }
+                <CategoryForm  />
+                <div>
+                    {categories
+                    .filter(c => c.userId === userId)
+                    .map(category => {
+                            return <Category key={category.id} 
+                            category={category} 
+                        
+                            />
+                    })
+                    }
+                </div>
             </div>
         </>
     )
