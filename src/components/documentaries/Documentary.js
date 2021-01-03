@@ -1,24 +1,34 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { DocumentaryContext } from "./DocumentaryProvider"
+import Collapse from 'react-bootstrap/Collapse'
 import "./Documentary.css"
 
 // component responsible for rendering a single documentary representation or "card"
 export const Documentary = ({ documentary, docCats, watchStatus, user, props }) => {
     const { removeDocumentary } = useContext(DocumentaryContext)
-
+    const [open, setOpen] = useState(false);
 
     return(
-        <div className="card text-light border-light" style={{ width: '18rem' }}>
+        <div className="card text-light border-light d-flex justify-content-center" style={{ width: '18rem' }}>
                 <h4 className="card-header">Watcher: {user.name}</h4>
                 {documentary.poster === `https://image.tmdb.org/t/p/w500null` ? "No Poster Available" : <img className="card-img-top" src={documentary.poster} style={{ width: '18rem', height: '24rem' }} alt="Poster"></img>}
-                <div className="card-body">
+                <div className="card-body d-flex justify-content-center">
                     <ul className="list-group-flush">
                         <h3 className="card-title">{documentary.title}</h3>
-                        <li className="list-group-item text-white">Synopsis: {documentary.synapsis}</li>
-                        <li className="list-group-item text-white">Watch Status: {watchStatus.name}</li>
-                        {documentary.rating === "" ? "" : <li className="list-group-item text-white">Rating: {documentary.rating}</li>}
-                        <li className="list-group-item text-white">Categories: #{docCats.map(dc => dc.category.name) }</li>
-                        {documentary.review === "" ? "" :<li className="list-group-item text-white">Review: {documentary.review}</li>}
+                        <button className="btn btn-secondary" onClick={() => setOpen(!open)}
+                            aria-controls="documentary-collapse-text"
+                            aria-expanded={open}
+                        >Details
+                        </button>
+                        <Collapse in={open}>
+                            <div id="documentary-collapse-text">
+                                <li className="list-group-item text-white">Synopsis: {documentary.synapsis}</li>
+                                <li className="list-group-item text-white">Watch Status: {watchStatus.name}</li>
+                                {documentary.rating === "" ? "" : <li className="list-group-item text-white">Rating: {documentary.rating}</li>}
+                                <li className="list-group-item text-white">Categories: #{docCats.map(dc => dc.category.name) }</li>
+                                {documentary.review === "" ? "" :<li className="list-group-item text-white">Review: {documentary.review}</li>}
+                            </div>
+                        </Collapse>
                     </ul>
                 </div>  
                 <button className="btn btn-secondary" onClick={() => {

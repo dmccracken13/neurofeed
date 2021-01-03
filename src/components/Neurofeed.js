@@ -26,8 +26,7 @@ export const Neurofeed = (props) => (
                     <>
                     <div className="header" id="myHeader">
                         <h2>Neurofeed</h2>
-                        <medium>Feed Your Head!</medium>
-                        <br></br>
+                        <h5>Feed Your Head!</h5>
                         <Link className="logout" to="/login" onClick={()=>{Logout()}}>logout</Link>
                     </div>
                         <FriendProvider>

@@ -158,7 +158,7 @@ const patchUpdatedDoc= (data) => {
                     </select>
 
                     <label>Choose your rating</label>
-                    <select name="rating" ref={register({ required: false })}>
+                    <select name="rating" ref={register({ required: true })}>
                             <option value="">Select...</option>
                             {ratingsArray.map((rating, i) => (
                                 <option key={i} value={rating}>
@@ -169,7 +169,7 @@ const patchUpdatedDoc= (data) => {
 
                     
                     <label>Write a review</label>
-                    <input name="review" type="text" defaultValue="" ref={register({ required: false })} />
+                    <input name="review" type="text" defaultValue="" ref={register({ required: true })} />
 
                     <label>Choose your categories</label>
                     <select name="categoryId" ref={register({ required: true })}>
