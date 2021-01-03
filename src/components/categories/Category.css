@@ -1,0 +1,5 @@
+.catList {
+    display: flex;
+    flex-flow: row wrap;
+    width: 110px
+}

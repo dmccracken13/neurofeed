@@ -33,10 +33,10 @@ export const DocumentaryList = ( props ) => {
         <>
             <div className="container">   
                 <h1 className="text-center">Watch Lists</h1>
-                <Link to={`/form`}>Add Documentary</Link>
+                        <Link className="d-flex justify-content-center" to={`/form`}>Add Documentary</Link>
                 <div className="row align-items-start">
                     <div className="col">
-                        <h2>Want To Watch</h2>
+                        <h2 className="d-flex justify-content-center">Want To Watch</h2>
                         {documentaries       // array of documentaries set by the getDocumentaries function 
                             .filter(d => d.watchStatusId === 1) 
                             .filter(d => d.userId === userId)
@@ -56,7 +56,7 @@ export const DocumentaryList = ( props ) => {
                         }
                     </div>
                     <div className="col">
-                        <h2>Watched</h2>
+                        <h2 className="d-flex justify-content-center">Watched</h2>
                         {documentaries
                             .filter(d => d.watchStatusId === 3)
                             .filter(d => d.userId === userId)

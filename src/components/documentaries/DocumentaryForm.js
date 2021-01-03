@@ -5,6 +5,7 @@ import { CategoryContext } from "../categories/CategoryProvider"
 import { WatchStatusContext } from "../watchStatuses/WatchStatusProvider"
 import { DocumentaryContext } from "./DocumentaryProvider"
 import { DocCategoryContext } from "../docCategories/DocCategoryProvider"
+import "./Documentary.css"
 
 export const DocumentaryForm = (props) => {
     const { register, handleSubmit } = useForm();
@@ -92,7 +93,7 @@ const patchUpdatedDoc= (data) => {
     if(editMode) {
         return (
             <>
-                <form className="documentary_form" onSubmit={handleSubmit(patchUpdatedDoc)}>
+                <form className="docForm" onSubmit={handleSubmit(patchUpdatedDoc)}>
                     {/* Dropdown for selecting a watch list, which has it's options populated by envoking the 
                     getWatchStatuses function, and mapping through the watchStatuses array that it sets       */}
                     <label>Choose a watch list</label>
@@ -130,7 +131,7 @@ const patchUpdatedDoc= (data) => {
         // The DocumentaryForm returns the jsx representation for the form 
         return (
             <>
-                <form className="container" onSubmit={handleSubmit(createNewDoc)}>
+                <form className="docForm" onSubmit={handleSubmit(createNewDoc)}>
                 {/* Drop down for selecting a documentary, which has it's options populated 
                 by mapping through the array containing the resulte from what is typed into the 
                 DocumentarySearch component  */}
