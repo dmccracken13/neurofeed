@@ -107,7 +107,7 @@ const patchUpdatedDoc= (data) => {
                     </select>
 
                     <label>Choose your rating</label>
-                    <select name="rating" ref={register({ required: true })}>
+                    <select name="rating" ref={register}>
                             <option value="">Select...</option>
                             {ratingsArray.map((rating, i) => (
                                 <option key={i} value={rating}>

@@ -56,6 +56,25 @@ export const DocumentaryList = ( props ) => {
                         }
                     </div>
                     <div className="col">
+                        <h2>Watching</h2>
+                        {documentaries
+                            .filter(d => d.watchStatusId === 2)
+                            .filter(d => d.userId === userId)
+                            .map(documentary => {
+                                const docCat = docCategories.find(dc => dc.documentaryId === documentary.id)
+                                const watchStat = watchStatuses.find(w => w.id === documentary.watchStatusId)
+                                const user = users.find(u => u.id === userId)
+                                return<Documentary key={documentary.id} 
+                                documentary={documentary} 
+                                docCat={docCat}
+                                watchStatus={watchStat}
+                                props={props}
+                                user={user}
+                                />
+                            })
+                        }
+                    </div>
+                    <div className="col">
                         <h2>Watched</h2>
                         {documentaries
                             .filter(d => d.watchStatusId === 3)
