@@ -8,7 +8,7 @@ import { DocCategoryContext } from "../docCategories/DocCategoryProvider"
 import "./Documentary.css"
 
 export const DocumentaryForm = (props) => {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, reset } = useForm();
 
     // all the arrays and functions that get, set, and add them are declared for the contexts they will be used in
     // after their context providers are imported
@@ -63,6 +63,7 @@ const createNewDoc= (data) => {
         })
     })
     .then(props.history.push(`/`))
+    reset({})
 }
 
 const patchUpdatedDoc= (data) => {
@@ -107,7 +108,7 @@ const patchUpdatedDoc= (data) => {
                     </select>
 
                     <label>Choose your rating</label>
-                    <select name="rating" ref={register}>
+                    <select name="rating" ref={register({ required: true })}>
                             <option value="">Select...</option>
                             {ratingsArray.map((rating, i) => (
                                 <option key={i} value={rating}>
@@ -158,7 +159,7 @@ const patchUpdatedDoc= (data) => {
                     </select>
 
                     <label>Choose your rating</label>
-                    <select name="rating" ref={register({ required: true })}>
+                    <select name="rating" ref={register}>
                             <option value="">Select...</option>
                             {ratingsArray.map((rating, i) => (
                                 <option key={i} value={rating}>
@@ -169,7 +170,7 @@ const patchUpdatedDoc= (data) => {
 
                     
                     <label>Write a review</label>
-                    <input name="review" type="text" defaultValue="" ref={register({ required: true })} />
+                    <input name="review" type="text" defaultValue="" ref={register} />
 
                     <label>Choose your categories</label>
                     <select name="categoryId" ref={register({ required: true })}>

@@ -17,7 +17,7 @@ export const CategoryList = () => {
             <div className="column">
             <h1>Categories</h1>
                 <CategoryForm  />
-                <div className="catList">
+                <div className="column">
                     {categories
                     .filter(c => c.userId === userId)
                     .map(category => {

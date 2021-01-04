@@ -7,4 +7,5 @@
 }
 .list-group {
     display: flex;
+    justify-content: space-evenly;
 }

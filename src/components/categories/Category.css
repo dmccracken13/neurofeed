@@ -1,5 +1,5 @@
 .catList {
     display: flex;
-    flex-flow: row wrap;
+    flex-direction: column;
     width: 300px;
 }

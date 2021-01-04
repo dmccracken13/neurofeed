@@ -25,3 +25,6 @@
     justify-content: center;
     width: 500px
 }
+.col {
+    justify-content: space-evenly;
+}
