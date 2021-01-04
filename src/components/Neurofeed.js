@@ -1,5 +1,6 @@
 import React from "react"
 import { Route, Redirect } from "react-router-dom"
+import "bootstrap/dist/css/bootstrap.min.css"
 import { Link } from "react-router-dom"
 import { DocumentaryProvider } from "./documentaries/DocumentaryProvider"
 import { DocumentaryList } from "./documentaries/DocumentaryList"
@@ -13,30 +14,35 @@ import { CategoryList } from "./categories/CategoryList"
 import { DocumentaryForm } from "./documentaries/DocumentaryForm"
 import { DocumentarySearch } from "./documentaries/DocumentarySearch"
 import { FriendProvider} from "./friends/FriendProvider"
+import "./Neurofeed.css"
 
 export const Neurofeed = (props) => (
     <>
+        <div className="mainContainer">
                 <Route render={() => {
              // The user id is saved under the key app_user_id in local Storage. Change below if needed!
             if (localStorage.getItem("app_user_id")) {
                 return (
                     <>
-                    <h2>Neurofeed</h2>
-                    <small>Feed Your Head!</small>
-                    
+                    <div className="header" id="myHeader">
+                        <h2>Neurofeed</h2>
+                        <h5>Feed Your Head!</h5>
+                        <Link className="logout" to="/login" onClick={()=>{Logout()}}>logout</Link>
+                    </div>
                         <FriendProvider>
                             <DocCategoryProvider>
                                 <WatchStatusProvider>
                                     <CategoryProvider>
                                         <DocumentaryProvider>
-                                        <Route exact path="/" render={
+                                            <div className="list-group">
+                                            <Route exact path="/" render={
                                             props => 
                                                 <>  
-                                                    <Link className="logout" to="/login" onClick={()=>{Logout()}}>logout</Link>
-                                                    <CategoryList />
-                                                    <DocumentaryList {...props} />
+                                                    <CategoryList className="list-group-item" />
+                                                    <DocumentaryList className="list-group-item" {...props} />
                                                 </>
-                                        } />   
+                                            } />   
+                                            </div>
                                         </DocumentaryProvider>
                                     </CategoryProvider>
                                 </WatchStatusProvider>
@@ -47,16 +53,19 @@ export const Neurofeed = (props) => (
                             <WatchStatusProvider>
                                 <CategoryProvider>
                                     <DocumentaryProvider>
-                                    <Route exact path="/form" render={
-                                        props => 
-                                            <>
-                                                <DocumentarySearch />
-                                                <DocumentaryForm {...props} />
-                                            </>
-                                    } /> 
-                                    <Route exact path="/documentaries/edit/:documentaryId(\d+)" render={
-                                        props => <DocumentaryForm {...props} />
-                                    } />  
+                                        <div className="container">
+                                        <Route exact path="/form" render={
+                                            props => 
+                                                <>
+                                                    <DocumentarySearch />
+                                                    <DocumentaryForm {...props} />
+                                                    
+                                                </>
+                                        } /> 
+                                        <Route exact path="/documentaries/edit/:documentaryId(\d+)" render={
+                                            props => <DocumentaryForm {...props} />
+                                        } /> 
+                                        </div>
                                     </DocumentaryProvider>
                                 </CategoryProvider>
                             </WatchStatusProvider>
@@ -70,5 +79,6 @@ export const Neurofeed = (props) => (
 
         <Route path="/login" render={props => <Login {...props} />} />
         <Route path="/register" render={props => <Register {...props} />} />
+        </div>
     </>
 )

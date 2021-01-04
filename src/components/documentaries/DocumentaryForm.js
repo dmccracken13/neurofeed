@@ -5,9 +5,10 @@ import { CategoryContext } from "../categories/CategoryProvider"
 import { WatchStatusContext } from "../watchStatuses/WatchStatusProvider"
 import { DocumentaryContext } from "./DocumentaryProvider"
 import { DocCategoryContext } from "../docCategories/DocCategoryProvider"
+import "./Documentary.css"
 
 export const DocumentaryForm = (props) => {
-    const { register, handleSubmit, errors, ErrorMessage } = useForm();
+    const { register, handleSubmit, reset } = useForm();
 
     // all the arrays and functions that get, set, and add them are declared for the contexts they will be used in
     // after their context providers are imported
@@ -21,7 +22,7 @@ export const DocumentaryForm = (props) => {
 
     // array which will be used to populate the ratings options for the ratings drop down in the form
 
-    const ratingsArray = ["1 Star", "2 Stars", "3 Stars", "3 Stars", "4 Stars", "5 Stars"]
+    const ratingsArray = ["1 Star", "2 Stars", "3 Stars", "4 Stars", "5 Stars"]
 
     const userId =  parseInt(localStorage.getItem("app_user_id"))
 
@@ -62,6 +63,7 @@ const createNewDoc= (data) => {
         })
     })
     .then(props.history.push(`/`))
+    reset({})
 }
 
 const patchUpdatedDoc= (data) => {
@@ -92,7 +94,7 @@ const patchUpdatedDoc= (data) => {
     if(editMode) {
         return (
             <>
-                <form className="documentary_form" onSubmit={handleSubmit(patchUpdatedDoc)}>
+                <form className="docForm" onSubmit={handleSubmit(patchUpdatedDoc)}>
                     {/* Dropdown for selecting a watch list, which has it's options populated by envoking the 
                     getWatchStatuses function, and mapping through the watchStatuses array that it sets       */}
                     <label>Choose a watch list</label>
@@ -130,7 +132,7 @@ const patchUpdatedDoc= (data) => {
         // The DocumentaryForm returns the jsx representation for the form 
         return (
             <>
-                <form className="documentary_form" onSubmit={handleSubmit(createNewDoc)}>
+                <form className="docForm" onSubmit={handleSubmit(createNewDoc)}>
                 {/* Drop down for selecting a documentary, which has it's options populated 
                 by mapping through the array containing the resulte from what is typed into the 
                 DocumentarySearch component  */}
@@ -157,7 +159,7 @@ const patchUpdatedDoc= (data) => {
                     </select>
 
                     <label>Choose your rating</label>
-                    <select name="rating" ref={register({ required: true })}>
+                    <select name="rating" ref={register}>
                             <option value="">Select...</option>
                             {ratingsArray.map((rating, i) => (
                                 <option key={i} value={rating}>

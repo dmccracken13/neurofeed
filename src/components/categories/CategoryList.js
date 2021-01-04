@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react"
 import { CategoryContext } from "../categories/CategoryProvider"
 import { Category } from "./Category"
 import { CategoryForm } from "./CategoryForm"
+import "./Category.css"
 
 export const CategoryList = () => {
     const { categories, getCategories } = useContext(CategoryContext)
@@ -13,18 +14,20 @@ export const CategoryList = () => {
 
     return (
         <>
+            <div className="column">
             <h1>Categories</h1>
-            <CategoryForm />
-            <div className="categories">
-                {categories
-                .filter(c => c.userId === userId)
-                .map(category => {
-                        return <Category key={category.id} 
-                        category={category} 
-                    
-                        />
-                })
-                }
+                <CategoryForm  />
+                <div className="column">
+                    {categories
+                    .filter(c => c.userId === userId)
+                    .map(category => {
+                            return <Category key={category.id} 
+                            category={category} 
+                        
+                            />
+                    })
+                    }
+                </div>
             </div>
         </>
     )

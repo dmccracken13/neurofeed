@@ -5,7 +5,7 @@ import { Documentary } from "./Documentary"
 import { WatchStatusContext } from "../watchStatuses/WatchStatusProvider"
 import { DocCategoryContext } from "../docCategories/DocCategoryProvider"
 import { FriendContext } from "../friends/FriendProvider"
-
+import "./Documentary.css"
 
 // function responsible for rendering lists of ducmentaries to the dom
 
@@ -31,47 +31,49 @@ export const DocumentaryList = ( props ) => {
 
     return (
         <>
-            <h1>Watch Lists</h1>
-            <div className="documentaries">
-                <Link to={`/form`}>Add Documentary</Link>
-                <h2>Want To Watch</h2>
-                <div className="documentaries_wantToWatch">
-                    {documentaries       // array of documentaries set by the getDocumentaries function 
-                        .filter(d => d.watchStatusId === 1) 
-                        .filter(d => d.userId === userId)
-                        // here we are filtering the documentary array by the watch status id of 1
-                        .map(documentary => {
-                        const filteredDocCats = docCategories.filter(dc => dc.documentaryId === documentary.id)
-                        const watchStat = watchStatuses.find(w => w.id === documentary.watchStatusId)
-                        const user = users.find(u => u.id === userId)
-                            return <Documentary key={documentary.id} 
-                            documentary={documentary} 
-                            docCats={filteredDocCats}
-                            watchStatus={watchStat}
-                            props={props}
-                            user={user}
-                            />
-                        }) 
-                    }
-                </div>
-                <h2>Watched</h2>
-                <div className="documentaries_watched">
-                    {documentaries
-                        .filter(d => d.watchStatusId === 3)
-                        .filter(d => d.userId === userId)
-                        .map(documentary => {
+            <div className="container-fluid">   
+                <h1 className="text-center">Watch Lists</h1>
+                        <Link className="d-flex justify-content-center"to={`/form`}>Add Documentary</Link>
+                <div className="row align-items-start d-flex justify-content-center">
+                    <div className="col">
+                        <h2>Want To Watch</h2>
+                        {documentaries       // array of documentaries set by the getDocumentaries function 
+                            .filter(d => d.watchStatusId === 1) 
+                            .filter(d => d.userId === userId)
+                            // here we are filtering the documentary array by the watch status id of 1
+                            .map(documentary => {
                             const filteredDocCats = docCategories.filter(dc => dc.documentaryId === documentary.id)
                             const watchStat = watchStatuses.find(w => w.id === documentary.watchStatusId)
                             const user = users.find(u => u.id === userId)
-                            return<Documentary key={documentary.id} 
-                            documentary={documentary} 
-                            docCats={filteredDocCats}
-                            watchStatus={watchStat}
-                            props={props}
-                            user={user}
-                            />
-                        })
-                    }
+                                return <Documentary key={documentary.id} 
+                                documentary={documentary} 
+                                docCats={filteredDocCats}
+                                watchStatus={watchStat}
+                                props={props}
+                                user={user}
+                                />
+                            }) 
+                        }
+                    </div>
+                    <div className="col">
+                        <h2>Watched</h2>
+                        {documentaries
+                            .filter(d => d.watchStatusId === 3)
+                            .filter(d => d.userId === userId)
+                            .map(documentary => {
+                                const filteredDocCats = docCategories.filter(dc => dc.documentaryId === documentary.id)
+                                const watchStat = watchStatuses.find(w => w.id === documentary.watchStatusId)
+                                const user = users.find(u => u.id === userId)
+                                return<Documentary key={documentary.id} 
+                                documentary={documentary} 
+                                docCats={filteredDocCats}
+                                watchStatus={watchStat}
+                                props={props}
+                                user={user}
+                                />
+                            })
+                        }
+                    </div>
                 </div>
             </div>
         </>
