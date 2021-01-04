@@ -9,7 +9,6 @@ import "./Documentary.css"
 
 export const DocumentaryForm = (props) => {
     const { register, handleSubmit, reset } = useForm();
-
     // all the arrays and functions that get, set, and add them are declared for the contexts they will be used in
     // after their context providers are imported
 
@@ -165,6 +164,7 @@ const patchUpdatedDoc= (data) => {
                                 <option key={i} value={rating}>
                                     {rating}
                                 </option>
+
                             ))}
                     </select>
 

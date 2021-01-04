@@ -42,12 +42,12 @@ export const DocumentaryList = ( props ) => {
                             .filter(d => d.userId === userId)
                             // here we are filtering the documentary array by the watch status id of 1
                             .map(documentary => {
-                            const filteredDocCats = docCategories.filter(dc => dc.documentaryId === documentary.id)
+                            const docCat = docCategories.find(dc => dc.documentaryId === documentary.id)
                             const watchStat = watchStatuses.find(w => w.id === documentary.watchStatusId)
                             const user = users.find(u => u.id === userId)
                                 return <Documentary key={documentary.id} 
                                 documentary={documentary} 
-                                docCats={filteredDocCats}
+                                docCat={docCat}
                                 watchStatus={watchStat}
                                 props={props}
                                 user={user}
@@ -61,12 +61,12 @@ export const DocumentaryList = ( props ) => {
                             .filter(d => d.watchStatusId === 3)
                             .filter(d => d.userId === userId)
                             .map(documentary => {
-                                const filteredDocCats = docCategories.filter(dc => dc.documentaryId === documentary.id)
+                                const docCat = docCategories.find(dc => dc.documentaryId === documentary.id)
                                 const watchStat = watchStatuses.find(w => w.id === documentary.watchStatusId)
                                 const user = users.find(u => u.id === userId)
                                 return<Documentary key={documentary.id} 
                                 documentary={documentary} 
-                                docCats={filteredDocCats}
+                                docCat={docCat}
                                 watchStatus={watchStat}
                                 props={props}
                                 user={user}

@@ -4,7 +4,7 @@ import Collapse from 'react-bootstrap/Collapse'
 import "./Documentary.css"
 
 // component responsible for rendering a single documentary representation or "card"
-export const Documentary = ({ documentary, docCats, watchStatus, user, props }) => {
+export const Documentary = ({ documentary, docCat, watchStatus, user, props }) => {
     const { removeDocumentary } = useContext(DocumentaryContext)
     const [open, setOpen] = useState(false);
 
@@ -25,7 +25,7 @@ export const Documentary = ({ documentary, docCats, watchStatus, user, props }) 
                                 <li className="list-group-item text-white">Synopsis: {documentary.synapsis}</li>
                                 <li className="list-group-item text-white">Watch Status: {watchStatus.name}</li>
                                 {documentary.rating === "" ? "" : <li className="list-group-item text-white">Rating: {documentary.rating}</li>}
-                                <li className="list-group-item text-white">Categories: #{docCats.map(dc => dc.category.name) }</li>
+                                {docCat.categoryId === 0 ? "" : <li className="list-group-item text-white">Category: #{docCat.category.name}</li>}
                                 {documentary.review === "" ? "" :<li className="list-group-item text-white">Review: {documentary.review}</li>}
                             </div>
                         </Collapse>
