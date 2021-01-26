@@ -25,7 +25,7 @@ export const Documentary = ({ documentary, docCat, watchStatus, user, props }) =
                                 <li className="list-group-item text-white">Synopsis: {documentary.synapsis}</li>
                                 <li className="list-group-item text-white">Watch Status: {watchStatus.name}</li>
                                 {documentary.rating === "" ? "" : <li className="list-group-item text-white">Rating: {documentary.rating}</li>}
-                                {docCat.categoryId === 0 ? "" : <li className="list-group-item text-white">Category: #{docCat.category.name}</li>}
+                                {docCat.categoryId === "0" ? "0" : <li className="list-group-item text-white">Category: #{docCat.category.name}</li>}
                                 {documentary.review === "" ? "" :<li className="list-group-item text-white">Review: {documentary.review}</li>}
                             </div>
                         </Collapse>

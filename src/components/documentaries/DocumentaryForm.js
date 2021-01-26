@@ -60,8 +60,8 @@ const createNewDoc= (data) => {
             documentaryId: newlyCreatedDoc.id,
             categoryId: parseInt(data.categoryId)
         })
+        .then(props.history.push(`/`))
     })
-    .then(props.history.push(`/`))
     reset({})
 }
 
